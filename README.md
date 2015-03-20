@@ -1,8 +1,8 @@
-# ModHelper
-Collection of scripts to act as the backbone for SMF mods
+# elkarte-addon-helper
+Collection of scripts to act as the backbone for ElkArte addons
 
 ## Requirements:
-- SMF 2.0 or greater
+- ElkArte 1.0 or greater
 - PHP 5.5 or greater
 
 ## License
