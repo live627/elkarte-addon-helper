@@ -9,6 +9,11 @@ class MockBitwiseFlag extends \live627\AddonHelper\BitwiseFlag
     const FLAG_MEMBER = 0x4;
     const FLAG_ADMIN = 0x8;
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    
     public function isRegistered(){
         return $this->isFlagSet(self::FLAG_REGISTERED);
     }
