@@ -1,6 +1,6 @@
 <?php
 
-namespace ModHelper\Tests;
+namespace live627\AddonHelper\Tests;
 
 class MockPsr4AutoloaderClass extends Psr4AutoloaderClass
 {
