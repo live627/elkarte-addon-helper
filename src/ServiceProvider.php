@@ -10,16 +10,15 @@
 
 namespace live627\AddonHelper;
 
-use Interop\Container\ServiceProvider as s;
+use HttpReq;
 use Interop\Container\ContainerInterface;
-use live627\AddonHelper\Ohara;
-use live627\AddonHelper\Dispatcher;
+use Interop\Container\ServiceProvider as s;
+use PHPExtra\EventManager\EventManager;
+use Psr\Log\LogLevel;
 use live627\AddonHelper\DataValidator;
 use live627\AddonHelper\Database;
-use HttpReq;
+use live627\AddonHelper\Dispatcher;
 use oNeDaL\Loggers\SqliteLogger;
-use Psr\Log\LogLevel;
-use PHPExtra\EventManager\EventManager;
 
 class ServiceProvider implements s
 {

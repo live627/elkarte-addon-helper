@@ -169,7 +169,7 @@ class Ohara extends \Action_Controller
      *
      * @access protected
      * @param string $var The name of the $txt key you want to retrieve
-     * @return string
+     * @return boolean
      */
     protected function setText($var)
     {
