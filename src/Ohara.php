@@ -241,7 +241,7 @@ class Ohara extends \Action_Controller
         if (empty($this->name) || empty($var))
             return false;
 
-        if (true == $this->enable($var))
+        if (true === $this->enable($var))
             return $modSettings[$this->name .'_'. $var];
 
         else

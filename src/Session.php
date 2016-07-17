@@ -49,7 +49,7 @@ class Session
      *
      * @param  string  $key       item to look for in session
      * @param  boolean $secondkey if used then use as a second key
-     * @return string             returns the key
+     * @return false|string       returns the key
      */
     public static function get($key, $secondkey = false)
     {
@@ -66,8 +66,8 @@ class Session
     }
 
     /**
-     * return the session array
-     * @return array of session indexes
+     * return the session
+     * @return string
      */
     public function __toString()
     {
