@@ -2,7 +2,7 @@
 
 namespace live627\AddonHelper\Tests;
 
-class MockPsr4AutoloaderClass extends Psr4AutoloaderClass
+class MockPsr4AutoloaderClass extends \live627\AddonHelper\Psr4AutoloaderClass
 {
     protected $files = array();
 
