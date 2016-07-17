@@ -1,0 +1,28 @@
+{
+  "name": "live627/elkarte-addon-helper",
+  "description": "Collection of scripts to act as the backbone for ElkArte addons",
+  "keywords": [
+    "ElkArte",
+    "addons"
+  ],
+  "homepage": "https://github.com/live627/elkarte-addon-helper",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "John Rayes",
+      "email": "live627@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.5.0",
+    "paragonie/random_compat": "~2.0",
+        "mnapoli/simplex": "0.2.1",
+        "onedal/php-sqlite-logger": "v1.0.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "live627\\AddonHelper\\": "src/"
+    }
+  }
+}
