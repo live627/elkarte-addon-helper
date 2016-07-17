@@ -34,19 +34,20 @@ class DataValidator extends \Data_Validator
         // Catch any errors the regex may produce.
         set_error_handler(array($this, 'handleError'));
 
-        if (preg_match($input[$field], null) === false)
-        {
-            restore_error_handler();
+        if (preg_match($input[$field], null) === false) {
             return array(
                 'error_msg' => $php_errormsg,
                 'error' => 'validate_regex_syntax',
                 'field' => $field,
             );
+        } else {
+            restore_error_handler();
         }
     }
 
     /**
-    * Custom error handler
+    * Ignore errors
+    * 
     * @param integer $code
     * @param string $description
     * @param string $file
@@ -54,7 +55,7 @@ class DataValidator extends \Data_Validator
     * @param mixed $context
     * @return boolean
     */
-    function handleError($code, $description, $file = null, $line = null, $context = null)
+    public function handleError($code, $description, $file = null, $line = null, $context = null)
     {
         return false;
     }
