@@ -30,7 +30,7 @@ if (!defined('ELK'))
 	DEFINE('CACHE_STALE', '?R11');
 
 	// Get the forum's settings for database and file paths.
-	require_once(__DIR__ . '/../vendor/elkarte/elkarte/Settings.php');
+	require_once(__DIR__ . '/../vendor/elkarte/elkarte/Settings.sample.php');
 
 	// Set our site "variable" constants
 	DEFINE('BOARDDIR', $boarddir);
