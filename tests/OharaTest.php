@@ -9,6 +9,21 @@ $txt['MockOhara_months'] = array(1 => 'January', 'February', 'March', 'April', '
 class MockOhara extends live627\AddonHelper\Ohara
 {
     public $name = __CLASS__;
+
+    public $subActions = [
+        'edit' => ['actionEdit', ''],
+    ];
+
+    public function __construct($util)
+    {
+        $this->util = $util;
+        parent::__construct(new \Simplex\Container);
+        $this->container->get('dispatcher')->dispatch($this);
+    }
+
+    public function actionEdit()
+    {
+    }
 }
 
 class MockSukiOhara extends Suki\Ohara
