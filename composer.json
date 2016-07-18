@@ -14,16 +14,27 @@
       "role": "Developer"
     }
   ],
+  "repositories": [
+    {
+      "url": "https://github.com/elkarte/Elkarte.git",
+      "type": "vcs"
+    }
+  ],
   "require": {
     "php": ">=5.5.0",
     "suki/ohara": "~1.0",
     "paragonie/random_compat": "~2.0",
     "mnapoli/simplex": "0.2.1",
-    "onedal/php-sqlite-logger": "v1.0.1"
+    "onedal/php-sqlite-logger": "v1.0.1",
+    "elkarte/elkarte": "dev-master"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "~4|~5"
   },
   "autoload": {
     "psr-4": {
       "live627\\AddonHelper\\": "src/"
     }
-  }
+  },
+  "minimum-stability": "dev"
 }
