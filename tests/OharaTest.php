@@ -1,6 +1,7 @@
 <?php
 
-require_once(__DIR__ . '/../vendor/elkarte/elkarte/tests/travis-ci/bootstrap.php');
+//~ require_once(__DIR__ . '/../vendor/elkarte/elkarte/tests/travis-ci/bootstrap.php');
+require_once(__DIR__ . '/bootstrap.php');
 
 $txt['months_title'] = 'Months';
 $txt['MockOhara_months'] = array(1 => 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
