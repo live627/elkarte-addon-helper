@@ -1,29 +1,5 @@
 <?php
 
-/**
- * This file is called before PHPUnit runs any tests.  Its purpose is
- * to initiate enough functions so the testcases can run with minimal
- * setup needs.
- *
- * @name      ElkArte Forum
- * @copyright ElkArte Forum contributors
- * @license   BSD http://opensource.org/licenses/BSD-3-Clause
- *
- * @version 1.1 beta 1
- *
- */
-
-// We're going to need, cough, a few globals
-global $mbname, $language;
-global $boardurl, $webmaster_email, $cookiename;
-global $db_server, $db_name, $db_user, $db_prefix, $db_persist, $db_error_send, $db_type, $db_port;
-global $modSettings, $context, $user_info, $topic, $board, $txt;
-global $scripturl, $db_passwd;
-global $boarddir, $sourcedir;
-global $ssi_db_user, $ssi_db_passwd;
-
-// Done to allow the option to runInSeparateProcess for phpunit
-// as done in Auth.subs.Test
 if (!defined('ELK'))
 {
 	DEFINE('ELK', '1');
@@ -60,30 +36,3 @@ require(SOURCEDIR . '/Autoloader.class.php');
 $autoloder = Elk_Autoloader::getInstance();
 $autoloder->setupAutoloader(array(SOURCEDIR, SUBSDIR, CONTROLLERDIR, ADMINDIR, ADDONSDIR));
 $autoloder->register(SOURCEDIR, '\\ElkArte');
-
-// Used by the test, add others as needed or ...
-$context = array();
-$context['forum_name'] = $mbname;
-$context['forum_name_html_safe'] = $context['forum_name'];
-
-// Just like we are starting, almost
-cleanRequest();
-loadDatabase();
-Hooks::init(database(), Debug::get());
-reloadSettings();
-elk_seed_generator();
-loadSession();
-loadUserSettings();
-loadBoard();
-loadPermissions();
-
-// Basic language is good to have for functional tests
-loadLanguage('index+Errors');
-
-// If we are running functional tests as well
-if (defined('PHPUNIT_SELENIUM'))
-{
-	require_once('/var/www/tests/sources/controllers/ElkArteWebTest.php');
-	PHPUnit_Extensions_Selenium2TestCase::shareSession(true);
-}
-file_put_contents('/var/www/bootstrapcompleted.lock', '1');
