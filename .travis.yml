@@ -12,7 +12,7 @@ cache:
 
 before_script: composer install
 
-script: phpunit --coverage-text --coverage-clover=coverage.clover
+script: phpunit
 
 after_script:
   - wget https://scrutinizer-ci.com/ocular.phar
