@@ -102,6 +102,7 @@ class NonceTest extends \PHPUnit_Framework_TestCase
     {
         $this->request->headers->set('User-Agent', 'live627\AddonHelper');
         $hash = $this->loader->generate();
+        $this->assertEquals($hash, $this->loader->getHash());
         $this->request->request->set($this->loader->getKey(), $hash);
     }
 
