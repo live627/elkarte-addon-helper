@@ -39,8 +39,9 @@ class Dispatcher
         // Preemptively set a page title.
         $context['page_title'] = $obj->text('title');
 
-        // This area is reserved for admins only - do this here since the menu code does not.
-        isAllowedTo($thisSubAction[1]);
+        // This area is reserved - do this here since the menu code does not.
+        if (!empty($thisSubAction[1]))
+            isAllowedTo($thisSubAction[1]);
 
         // Calls a private function based on the sub-action
         $obj->{$thisSubAction[0]}();
