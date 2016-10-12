@@ -25,7 +25,7 @@
     "suki/ohara": "1.0.*",
     "paragonie/random_compat": "~2.0",
     "mnapoli/simplex": "0.2.1",
-    "onedal/php-sqlite-logger": "v1.0.1",
+    "ezyang/htmlpurifier": "~4.8",
     "elkarte/elkarte": "dev-development"
   },
   "require-dev": {
