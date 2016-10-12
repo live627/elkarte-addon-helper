@@ -28,6 +28,21 @@ require_once(SOURCEDIR . '/Load.php');
 require_once(SOURCEDIR . '/Security.php');
 require_once(SUBSDIR . '/Cache.subs.php');
 
+class Errors
+{
+	public function __call($name,$args)
+	{
+        global $i;
+
+        $i = 'i';
+	}
+
+	public static function instance()
+	{
+		return new Errors();
+	}
+}
+
 // Get the autoloader rolling
 require(SOURCEDIR . '/Autoloader.class.php');
 $autoloder = Elk_Autoloader::getInstance();

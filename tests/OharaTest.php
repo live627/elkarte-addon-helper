@@ -17,27 +17,25 @@ $modSettings['MockOhara_months'] = array(1 => 'January', 'February', 'March', 'A
 $context['admin_menu_name']='MockOhara';
 $context['MockOhara']=['tab_data'=>[]];
 
+		$user_info = array(
+			'is_admin' => true,
+			'is_guest' => false,
+		);
+
 class MockOhara extends Ohara
 {
     public $name = 'MockOhara';
 
     public $subActions = [
-        'index' => ['actionIndex', ''],
-        'edit' => ['actionEdit', ''],
+        'index' => ['actionIndex'],
+        'edit' => ['actionEdit', 'g'],
     ];
 
     public function __construct()
     {
         parent::__construct(new \Simplex\Container);
-        $this->container->get('dispatcher')->dispatch($this);
     }
 
-    public function actionIndex()
-    {
-        global $i;
-
-        $i = 'i';
-    }
 
     public function actionEdit()
     {
@@ -104,11 +102,10 @@ class OharaTest extends \PHPUnit_Framework_TestCase
     {
         global $context, $i;
 
-		$obj=new MockOhara;
-        $request = $obj->getContainer()->get('request');
+        $request = $this->loader->getContainer()->get('request');
         $request->query->set('sa','edit');
         $request->query->set('area','mock');
-        $obj->getContainer()->get('dispatcher')->dispatch($obj);
+        $this->loader->getContainer()->get('dispatcher')->dispatch($this->loader);
 
         $this->assertSame('e', $i);
         $this->assertSame('mock_edit', $context['sub_template']);
