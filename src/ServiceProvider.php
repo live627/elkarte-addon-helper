@@ -11,10 +11,7 @@
 namespace live627\AddonHelper;
 
 use Interop\Container\ContainerInterface;
-use Interop\Container\ServiceProvider as s
-use live627\AddonHelper\DataValidator;
-use live627\AddonHelper\Database;
-use live627\AddonHelper\Dispatcher;
+use Interop\Container\ServiceProvider as s;
 use Symfony\Component\HttpFoundation\Request;
 
 class ServiceProvider implements s
@@ -22,13 +19,13 @@ class ServiceProvider implements s
     public function getServices()
     {
         return [
-            'database' => function(ContainerInterface $container, callable $getPrevious = null) {
+            'database' => function() {
                 return new Database;
             },
-            'dispatcher' => function(ContainerInterface $container, callable $getPrevious = null) {
+            'dispatcher' => function() {
                 return new Dispatcher;
             },
-            'datavalidator' => function(ContainerInterface $container, callable $getPrevious = null) {
+            'datavalidator' => function() {
                 return new DataValidator;
             },
             'request' => function() {
