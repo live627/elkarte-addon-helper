@@ -10,7 +10,6 @@
 
 namespace live627\AddonHelper;
 
-use Interop\Container\ContainerInterface;
 use Interop\Container\ServiceProvider as s;
 use Symfony\Component\HttpFoundation\Request;
 

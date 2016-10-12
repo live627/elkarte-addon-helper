@@ -19,9 +19,8 @@ class DataValidator extends \Data_Validator
      *
      * @param string $field
      * @param mixed[] $input
-     * @param mixed[]|null $validation_parameters array or null
      */
-    protected function _validate_regex($field, $input, $validation_parameters = null)
+    protected function _validate_regex($field, $input)
     {
         global $php_errormsg;
 
@@ -49,14 +48,9 @@ class DataValidator extends \Data_Validator
     /**
     * Ignore errors
     *
-    * @param integer $code
-    * @param string $description
-    * @param string $file
-    * @param interger $line
-    * @param mixed $context
     * @return boolean
     */
-    public function handleError($code, $description, $file = null, $line = null, $context = null)
+    public function handleError()
     {
         return false;
     }
@@ -67,9 +61,8 @@ class DataValidator extends \Data_Validator
      * Usage: '[key]' => 'htmlpurifier'
      *
      * @param string $field
-     * @param mixed[]|null $validation_parameters array or null
      */
-    protected function _sanitation_htmlpurifier($field, $validation_parameters = null)
+    protected function _sanitation_htmlpurifier($field)
     {
         $config = \HTMLPurifier_Config::createDefault();
         $config->set('HTML.Doctype', 'XHTML 1.1');
