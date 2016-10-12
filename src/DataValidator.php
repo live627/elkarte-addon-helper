@@ -18,31 +18,46 @@ class DataValidator extends \Data_Validator
      * Usage: '[key]' => 'regex'
      *
      * @param string $field
-     * @param mixed[] $input
+     * @param array $input
+    *
+    * @return array
      */
     protected function _validate_regex($field, $input)
     {
         global $php_errormsg;
 
         if (!isset($input[$field]))
-            return;
+            return [];
 
-        // Turn off all error reporting
-        $e = error_reporting(0);
-
-        // Catch any errors the regex may produce.
-        set_error_handler(array($this, 'handleError'));
-
-        $r=preg_match($input[$field], null) === false;
-            restore_error_handler();
-            error_reporting($e);
-        if ($r) {
+        if (!$this->processRegex($input[$field])) {
             return array(
                 'error_msg' => $php_errormsg,
                 'error' => 'validate_regex_syntax',
                 'field' => $field,
             );
         }
+    }
+
+    /**
+    * Test a regex
+     *
+     * @param string $input The regex to test
+    *
+    * @return boolean Whether the regex is valid
+    */
+    public function processRegex($input)
+    {
+        // Turn off all error reporting
+        $e = error_reporting(0);
+
+        // Catch any errors the regex may produce.
+        set_error_handler(array($this, 'handleError'));
+
+        $r=preg_match($input, null) !== false;
+            restore_error_handler();
+            error_reporting($e);
+
+        return $r;
     }
 
     /**
@@ -56,11 +71,13 @@ class DataValidator extends \Data_Validator
     }
 
     /**
-     * htmlpurifier ... Determine if the provided value is a regular expressions
+     * htmlpurifier ... Run input through HTMLPurifier
      *
      * Usage: '[key]' => 'htmlpurifier'
      *
-     * @param string $field
+     * @param string $field The dirty HTML
+    *
+    * @return string The purified HTML
      */
     protected function _sanitation_htmlpurifier($field)
     {
