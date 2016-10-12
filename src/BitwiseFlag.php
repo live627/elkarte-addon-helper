@@ -21,7 +21,7 @@ abstract class BitwiseFlag
 
     protected function __construct($flags = 0x0)
     {
-        $this->flags = Sanitizer::sanitizeInt($flags, 0x0, 0x80000000);
+        $this->flags = max(min($flags, 0x80000000), 0x0);
     }
 
     protected function isFlagSet($flag)
