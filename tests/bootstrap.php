@@ -1,8 +1,8 @@
 <?php
+	global $db_persist, $db_server, $db_user, $db_passwd, $db_port;
+	global $db_type, $db_name, $ssi_db_user, $ssi_db_passwd, $db_prefix;
 
-if (!defined('ELK'))
-{
-	DEFINE('ELK', '1');
+	DEFINE('ELK', 'SSI');
 	DEFINE('CACHE_STALE', '?R11');
 
 	// Get the forum's settings for database and file paths.
@@ -18,9 +18,6 @@ if (!defined('ELK'))
 	DEFINE('CONTROLLERDIR', $sourcedir . '/controllers');
 	DEFINE('SUBSDIR', $sourcedir . '/subs');
 	DEFINE('ADDONSDIR', $sourcedir . '/addons');
-}
-else
-	require_once(__DIR__ . '/../vendor/elkarte/elkarte/tests/travis-ci/Settings.php');
 
 // A few files we cannot live without and will not be autoload
 require_once(SOURCEDIR . '/QueryString.php');
@@ -36,3 +33,16 @@ require(SOURCEDIR . '/Autoloader.class.php');
 $autoloder = Elk_Autoloader::getInstance();
 $autoloder->setupAutoloader(array(SOURCEDIR, SUBSDIR, CONTROLLERDIR, ADMINDIR, ADDONSDIR));
 $autoloder->register(SOURCEDIR, '\\ElkArte');
+
+		$settings['theme_dir'] = $settings['default_theme_dir'] = BOARDDIR . '/themes/default';
+		$settings['theme_url'] = $settings['default_theme_url'] = $boardurl . '/themes/default';
+
+$txt=['theme_language_error'=> 'Unable to load the \'%1$s\' language file.'];
+$modSettings['enableErrorLogging']=0;
+$db_server = '127.0.0.1';
+file_put_contents(BOARDDIR . '/db_last_error.txt', time(), LOCK_EX);
+ loadDatabase();
+
+function template_mock_edit()
+{
+}
