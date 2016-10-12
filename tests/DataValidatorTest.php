@@ -30,6 +30,24 @@ class DataValidatorTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * @dataProvider sanitizeHtmlProvider
+     */
+    public function testSanitizeHtml($value, $expected, $clean)
+    {
+        $this->validator->sanitation_rules(array('value' => 'htmlpurifier'));
+        $this->validate($value, $expected);
+        $this->assertSame($this->validator->value, $clean);
+    }
+
+    public function sanitizeHtmlProvider()
+    {
+        return array(
+            array('<img src="javascript:evil();" onload="evil();" />', true, ''),
+            array('c<STYLE>li {list-style-image:url("javascript:alert(\'XSS\')");}</STYLE><UL><LI>XSS', true, 'c<ul><li>XSS</li></ul>')
+        );
+    }
+
     public function validate($value, $expected)
     {
         $result = $this->validator->validate(array('value' => $value));

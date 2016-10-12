@@ -71,7 +71,6 @@ class DataValidator extends \Data_Validator
      */
     protected function _sanitation_htmlpurifier($field, $validation_parameters = null)
     {
-        require_once __DIR__ . '/HTMLPurifier.standalone.php';
         $config = \HTMLPurifier_Config::createDefault();
         $config->set('HTML.Doctype', 'XHTML 1.1');
         $def = $config->getHTMLDefinition(true);
