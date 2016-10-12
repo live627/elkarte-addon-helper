@@ -68,6 +68,16 @@ class OharaTest extends \PHPUnit_Framework_TestCase
         $this->o = new MockSukiOhara;
     }
 
+    public function testName()
+    {
+        $actual = $this->loader->getName();
+        $this->assertEquals('MockOhara', $actual);
+
+        $this->loader->setName('trolololol');
+        $actual = $this->loader->getName();
+        $this->assertSame('trolololol', $actual);
+    }
+
     public function testDispatched()
     {
         global $context, $i;
