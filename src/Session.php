@@ -19,17 +19,7 @@ class Session
      */
     public static function put($key, $value = false)
     {
-        /**
-        * Check whether session is set in array or not
-        * If array then set all session key-values in foreach loop
-        */
-        if (is_array($key) && $value === false) {
-            foreach ($key as $name => $value) {
-                $_SESSION[$name] = $value;
-            }
-        } else {
             $_SESSION[$key] = $value;
-        }
     }
 
     /**
@@ -48,29 +38,12 @@ class Session
      * get item from session
      *
      * @param  string  $key       item to look for in session
-     * @param  boolean $secondkey if used then use as a second key
-     * @return false|string       returns the key
+     * @return mixed       returns the key
      */
-    public static function get($key, $secondkey = false)
+    public static function get($key)
     {
-        if ($secondkey !== false) {
-            if (isset($_SESSION[$key][$secondkey])) {
-                return $_SESSION[$key][$secondkey];
-            }
-        } else {
-            if (isset($_SESSION[$key])) {
+            if (isset($_SESSION[$key]))
                 return $_SESSION[$key];
-            }
-        }
         return false;
-    }
-
-    /**
-     * return the session
-     * @return string
-     */
-    public function __toString()
-    {
-        return print_r($_SESSION);
     }
 }
