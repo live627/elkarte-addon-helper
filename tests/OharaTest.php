@@ -10,6 +10,10 @@ require_once(__DIR__ . '/bootstrap.php');
 $txt['months_title'] = 'Months';
 $txt['MockOhara_months'] = array(1 => 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 
+$modSettings['months_title'] = 'Months';
+$modSettings['MockOhara']=1;
+$modSettings['MockOhara_months'] = array(1 => 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+
 $context['admin_menu_name']='MockOhara';
 $context['MockOhara']=['tab_data'=>[]];
 
@@ -100,5 +104,31 @@ class OharaTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($actual);
         $actual = $this->o->text('days_title');
         $this->assertFalse($actual);
+    }
+
+    public function testModSettings()
+    {
+        $actual = $this->loader->modSetting('months_title');
+        $this->assertSame('Months', $actual);
+        $actual = $this->loader->modSetting('months');
+        $this->assertFalse($actual);
+
+        $actual = $this->o->modSetting('months_title');
+        $this->assertSame('Months', $actual);
+        $actual = $this->o->modSetting('months');
+        $this->assertFalse($actual);
+    }
+
+    public function testSettings()
+    {
+        $actual = $this->loader->setting('months_title');
+        $this->assertFalse($actual);
+        $actual = $this->loader->setting('months')[2];
+        $this->assertSame('February', $actual);
+
+        $actual = $this->o->setting('months_title');
+        $this->assertFalse($actual);
+        $actual = $this->o->setting('months')[2];
+        $this->assertSame('February', $actual);
     }
 }
