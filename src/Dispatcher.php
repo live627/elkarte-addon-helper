@@ -21,19 +21,22 @@ class Dispatcher
             'title' => $obj->text('title'),
             'description' => $obj->text('desc'),
         );
+        $request = $obj->getContainer()->get('request');
+        $sa = $request->query->get('sa');
+        $area = $request->query->get('area');
 
         // Default to sub action 'index'
-        if (!isset($_GET['sa']) || !isset($obj->subActions[$_GET['sa']])) {
-            $_GET['sa'] = 'index';
+        if (!isset($obj->subActions[$sa])) {
+            $sa = 'index';
         }
-        $thisSubAction = $obj->subActions[$_GET['sa']];
+        $thisSubAction = $obj->subActions[$sa];
 
         // This area is wide open.
-        loadTemplate('AddonHelper');
-        if (isset($_GET['area']) && is_callable('template_' . $_GET['area'] . '_' . $_GET['sa'])) {
-            $context['sub_template'] = $_GET['area'] . '_' . $_GET['sa'];
+        loadTemplate('LiveGallery');
+        if (!empty($area) && is_callable('template_'.$area.'_'.$sa)) {
+            $context['sub_template'] = $area.'_'.$sa;
         } else {
-            $context['sub_template'] = $_GET['sa'];
+            $context['sub_template'] = $sa;
         }
 
         // Preemptively set a page title.

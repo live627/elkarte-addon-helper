@@ -2,6 +2,10 @@
 
 namespace live627\AddonHelper\Tests;
 
+use live627\AddonHelper\ServiceProvider;
+
+require_once(__DIR__ . '/OharaTest.php');
+
 class MockNonce extends \live627\AddonHelper\Nonce
 {
     public function checkAttack()
@@ -24,9 +28,16 @@ class NonceTest extends \PHPUnit_Framework_TestCase
 {
     protected $loader;
 
+    /**
+     * @var Symfony\Component\HttpFoundation\Request
+     */
+    private $request;
+
     protected function setUp()
     {
-        $this->loader = new MockNonce;
+		$obj=new MockOhara;
+        $this->loader = new MockNonce($obj);
+        $this->request = $obj->getContainer()->get('request');
     }
 
     public function testKey()
@@ -49,41 +60,55 @@ class NonceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(90, $actual);
     }
 
-    public function testAttack()
+    public function testMissingSessionToken()
     {
-        if (session_status() === PHP_SESSION_DISABLED) {
-            throw new RuntimeException('PHP sessions are disabled');
-        }
-        if (session_status() === PHP_SESSION_ACTIVE) {
-            throw new RuntimeException('Failed to start the session: already started by PHP.');
-        }
         $actual = $this->loader->checkAttack();
         $this->assertSame('Missing CSRF session token', $actual);
+    }
 
+    public function testMissingFormToken()
+    {
         $_SESSION[$this->loader->getKey()] = true;
         $actual = $this->loader->checkAttack();
         $this->assertSame('Missing CSRF form token', $actual);
+    }
 
-        $_SERVER['REMOTE_ADDR'] = 'live627\AddonHelper Test Suite';
-        $_SERVER['HTTP_USER_AGENT'] = 'live627\AddonHelper';
-        $hash = $this->loader->generate();
-        $_SERVER['REMOTE_ADDR'] = '';
-        $_SERVER['HTTP_USER_AGENT'] = '';
-        $_POST[$this->loader->getKey()] = true;
+    public function testTokenOriginMismatch()
+    {
+        $this->generate();
+        $this->request->headers->set('User-Agent', '');
+        $this->request->request->set($this->loader->getKey(), true);
         $actual = $this->loader->checkAttack();
         $this->assertSame('Form origin does not match token origin.', $actual);
+    }
 
-        $_SERVER['REMOTE_ADDR'] = 'live627\AddonHelper Test Suite';
-        $_SERVER['HTTP_USER_AGENT'] = 'live627\AddonHelper';
+    public function testTokenMismatch()
+    {
+        $this->generate();
+        $this->request->request->set($this->loader->getKey(), true);
         $actual = $this->loader->checkAttack();
         $this->assertSame('Invalid CSRF token', $actual);
+    }
 
-        $_POST[$this->loader->getKey()] = $hash;
+    public function generate()
+    {
+        $this->request->headers->set('User-Agent', 'live627\AddonHelper');
+        $hash = $this->loader->generate();
+        $this->request->request->set($this->loader->getKey(), $hash);
+    }
+
+    public function testExpiredToken()
+    {
+        $this->generate();
         $this->loader->setTtl(-90);
         $actual = $this->loader->checkAttack();
         $this->assertSame('CSRF token has expired.', $actual);
-
         $this->loader->setTtl(90);
+    }
+
+    public function testSuccess()
+    {
+        $this->generate();
         $actual = $this->loader->check();
         $this->assertTrue($actual);
     }

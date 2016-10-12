@@ -74,7 +74,7 @@ class Ohara extends \Action_Controller
         $this->boardUrl = $boardurl;
         $this->container = $container;
         $this->container->register(new ServiceProvider);
-        $this->nonce = new Nonce(md5(static::class));
+        $this->nonce = new Nonce($this, md5(static::class));
     }
 
     /**

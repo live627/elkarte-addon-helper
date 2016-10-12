@@ -28,10 +28,15 @@ class Nonce
     private $ttl = 900;
 
     /**
+     * @var Symfony\Component\HttpFoundation\Request
+     */
+    private $request;
+
+    /**
      * @param string $key The session and $origin key where to find the token.
      * @param int $ttl (Facultative) Makes the token expire after $this->ttl seconds. (null = never)
      */
-    public function __construct($key = null, $ttl = 900)
+    public function __construct(Ohara $obj, $key = null, $ttl = 900)
     {
         if (!isset($key)) {
             $this->key = 'csrf_' . bin2hex(random_bytes(8));
@@ -40,6 +45,7 @@ class Nonce
             throw new \InvalidArgumentException('Integer expected: $ttl');
         }
         $this->ttl = $ttl;
+        $this->request = $obj->getContainer()->get('request');
     }
     /**
      * Check CSRF tokens match between session and $origin.
@@ -54,17 +60,17 @@ class Nonce
             throw new Exceptions\MissingDataException('Missing CSRF session token');
         }
 
-        if (!isset($_POST[$this->key])) {
+        if (!$this->request->request->has($this->key)) {
             throw new Exceptions\MissingDataException('Missing CSRF form token');
         }
 
         // Origin checks
-        if (sha1($_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT']) != substr(base64_decode($this->hash), 10, 40)) {
+        if (sha1( $this->request-> getClientIp() . $this->request->headers->get('User-Agent')) != substr(base64_decode($this->hash), 10, 40)) {
             throw new Exceptions\BadCombinationException('Form origin does not match token origin.');
         }
 
         // Check if session token matches form token
-        if ($_POST[$this->key] !== $this->hash) {
+        if ($this->request->request->get($this->key) !== $this->hash) {
             throw new Exceptions\BadCombinationException('Invalid CSRF token');
         }
 
@@ -130,7 +136,7 @@ class Nonce
     public function generate()
     {
         // token generation (basically base64_encode any random complex string, time() is used for token expiration)
-        $this->hash = base64_encode(time() . sha1($_SERVER['REMOTE_ADDR'] . $_SERVER['HTTP_USER_AGENT']) . bin2hex(random_bytes(32)));
+        $this->hash = base64_encode(time() . sha1($this->request-> getClientIp() . $this->request->headers->get('User-Agent')) . bin2hex(random_bytes(32)));
         Session::put($this->key, $this->hash);
         return $this->hash;
     }

@@ -10,12 +10,12 @@
 
 namespace live627\AddonHelper;
 
-use HttpReq;
 use Interop\Container\ContainerInterface;
 use Interop\Container\ServiceProvider as s
 use live627\AddonHelper\DataValidator;
 use live627\AddonHelper\Database;
 use live627\AddonHelper\Dispatcher;
+use Symfony\Component\HttpFoundation\Request;
 
 class ServiceProvider implements s
 {
@@ -31,9 +31,8 @@ class ServiceProvider implements s
             'datavalidator' => function(ContainerInterface $container, callable $getPrevious = null) {
                 return new DataValidator;
             },
-            'httpreq' => function(ContainerInterface $container, callable $getPrevious = null) {
-                $dependency = $container->get('datavalidator');
-                return new HttpReq($dependency);
+            'request' => function() {
+                return Request::createFromGlobals();
             }
         ];
     }
