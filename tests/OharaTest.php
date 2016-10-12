@@ -78,10 +78,24 @@ class OharaTest extends \PHPUnit_Framework_TestCase
         $this->assertSame('trolololol', $actual);
     }
 
+    public function testContainer()
+    {
+        $actual = $this->loader->getContainer();
+        $this->assertInstanceOf('Interop\Container\ContainerInterface', $actual);
+
+        $mock = $this->createMock('Interop\Container\ContainerInterface');
+        $this->loader->setContainer($mock);
+        $this->assertContains('Mock_ContainerInterface', get_class($mock));
+        $actual = $this->loader->getContainer();
+        $this->assertContains('Mock_ContainerInterface', get_class($actual));
+        $this->assertInstanceOf('Interop\Container\ContainerInterface', $actual);
+    }
+
     public function testDispatched()
     {
         global $context, $i;
 
+        $this->loader->getContainer()->get('dispatcher')->dispatch($this->loader);
         $this->assertSame('i', $i);
         $this->assertSame('index', $context['sub_template']);
     }
