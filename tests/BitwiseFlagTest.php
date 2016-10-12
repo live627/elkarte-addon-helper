@@ -13,7 +13,7 @@ class MockBitwiseFlag extends \live627\AddonHelper\BitwiseFlag
     {
         parent::__construct();
     }
-    
+
     public function isRegistered(){
         return $this->isFlagSet(self::FLAG_REGISTERED);
     }
@@ -78,5 +78,21 @@ class BitwiseFlagTest extends \PHPUnit_Framework_TestCase
     public function testRawBits()
     {
         $this->assertEquals(0x7, (string) $this->loader);
+    }
+
+    public function testChangeFlag()
+    {
+        $this->loader->setActive(false);
+        $actual = $this->loader->isActive();
+        $this->assertFalse($actual);
+
+        $actual = $this->loader->isRegistered();
+        $this->assertTrue($actual);
+    }
+
+    public function testRawBitsChanged()
+    {
+        $this->loader->setActive(false);
+        $this->assertEquals(0x5, (string) $this->loader);
     }
 }
