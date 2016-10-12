@@ -38,6 +38,20 @@ class Ohara extends \Action_Controller
      */
     protected $text = [];
 
+/**
+ * URL to the script currently running
+ *
+ * @var string
+ */
+public $scriptUrl = '';
+
+/**
+ * URL to Elkarte
+ *
+ * @var string
+ */
+public $boardUrl = '';
+
     /**
      * Array of subactions.
      *
@@ -67,10 +81,9 @@ class Ohara extends \Action_Controller
      */
     public function __construct(ContainerInterface $container)
     {
-        global $scripturl, $settings, $boardurl;
+        global $scripturl, $boardurl;
 
         $this->scriptUrl = $scripturl;
-        $this->settings = $settings;
         $this->boardUrl = $boardurl;
         $this->container = $container;
         $this->container->register(new ServiceProvider);
