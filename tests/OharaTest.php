@@ -81,7 +81,10 @@ class OharaTest extends \PHPUnit_Framework_TestCase
         $actual = $this->loader->getContainer();
         $this->assertInstanceOf('Interop\Container\ContainerInterface', $actual);
 
+        if (is_callable($thisk,'createMock'))
         $mock = $this->createMock('Interop\Container\ContainerInterface');
+        else
+        $mock = $this->getMock('Interop\Container\ContainerInterface');
         $this->loader->setContainer($mock);
         $this->assertContains('Mock_ContainerInterface', get_class($mock));
         $actual = $this->loader->getContainer();
