@@ -188,19 +188,16 @@ public $boardUrl = '';
     {
         global $txt;
 
-        if (empty($var)) {
-            return false;
-        }
         // Load the mod's language file.
         loadLanguage($this->name);
+
+            $this->text[$var] = false;
         if (!empty($txt[$this->name . '_' . $var])) {
             $this->text[$var] = $txt[$this->name . '_' . $var];
         } elseif (!empty($txt[$this->name . $var])) {
             $this->text[$var] = $txt[$this->name . $var];
         } elseif (!empty($txt[$var])) {
             $this->text[$var] = $txt[$var];
-        } else {
-            $this->text[$var] = false;
         }
         return $this->text[$var] !== false;
     }
@@ -231,11 +228,7 @@ public $boardUrl = '';
         if (empty($var))
             return false;
 
-        if (isset($modSettings[$this->name .'_'. $var]) && !empty($modSettings[$this->name .'_'. $var]))
-            return true;
-
-        else
-            return false;
+            return !empty($modSettings[$this->name .'_'. $var]);
     }
 
     /**
