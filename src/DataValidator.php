@@ -21,7 +21,7 @@ class DataValidator extends \Data_Validator
      * @param mixed[] $input
      * @param mixed[]|null $validation_parameters array or null
      */
-    protected function _validate_regex_syntax($field, $input, $validation_parameters = null)
+    protected function _validate_regex($field, $input, $validation_parameters = null)
     {
         global $php_errormsg;
 
@@ -29,25 +29,26 @@ class DataValidator extends \Data_Validator
             return;
 
         // Turn off all error reporting
-        error_reporting(0);
+        $e = error_reporting(0);
 
         // Catch any errors the regex may produce.
         set_error_handler(array($this, 'handleError'));
 
-        if (preg_match($input[$field], null) === false) {
+        $r=preg_match($input[$field], null) === false;
+            restore_error_handler();
+            error_reporting($e);
+        if ($r) {
             return array(
                 'error_msg' => $php_errormsg,
                 'error' => 'validate_regex_syntax',
                 'field' => $field,
             );
-        } else {
-            restore_error_handler();
         }
     }
 
     /**
     * Ignore errors
-    * 
+    *
     * @param integer $code
     * @param string $description
     * @param string $file
