@@ -1,32 +1,49 @@
 <?php
 
+namespace live627\AddonHelper\Tests;
+
+use live627\AddonHelper\Ohara;
+
 //~ require_once(__DIR__ . '/../vendor/elkarte/elkarte/tests/travis-ci/bootstrap.php');
 require_once(__DIR__ . '/bootstrap.php');
 
 $txt['months_title'] = 'Months';
 $txt['MockOhara_months'] = array(1 => 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 
-class MockOhara extends live627\AddonHelper\Ohara
+$context['admin_menu_name']='MockOhara';
+$context['MockOhara']=['tab_data'=>[]];
+
+class MockOhara extends Ohara
 {
-    public $name = __CLASS__;
+    public $name = 'MockOhara';
 
     public $subActions = [
+        'index' => ['actionIndex', ''],
         'edit' => ['actionEdit', ''],
     ];
 
-    public function __construct($util)
+    public function __construct()
     {
-        $this->util = $util;
         parent::__construct(new \Simplex\Container);
         $this->container->get('dispatcher')->dispatch($this);
     }
 
+    public function actionIndex()
+    {
+        global $i;
+
+        $i = 'i';
+    }
+
     public function actionEdit()
     {
+        global $i;
+
+        $i = 'e';
     }
 }
 
-class MockSukiOhara extends Suki\Ohara
+class MockSukiOhara extends \Suki\Ohara
 {
     public $name = 'MockOhara';
 
@@ -36,7 +53,7 @@ class MockSukiOhara extends Suki\Ohara
     }
 }
 
-class OharaTest extends PHPUnit_Framework_TestCase
+class OharaTest extends \PHPUnit_Framework_TestCase
 {
     protected $loader;
     protected $o;
@@ -45,6 +62,28 @@ class OharaTest extends PHPUnit_Framework_TestCase
     {
         $this->loader = new MockOhara;
         $this->o = new MockSukiOhara;
+    }
+
+    public function testDispatched()
+    {
+        global $context, $i;
+
+        $this->assertSame('i', $i);
+        $this->assertSame('index', $context['sub_template']);
+    }
+
+    public function testDispatch()
+    {
+        global $context, $i;
+
+		$obj=new MockOhara;
+        $request = $obj->getContainer()->get('request');
+        $request->query->set('sa','edit');
+        $request->query->set('area','mock');
+        $obj->getContainer()->get('dispatcher')->dispatch($obj);
+
+        $this->assertSame('e', $i);
+        $this->assertSame('mock_edit', $context['sub_template']);
     }
 
     public function testText()
