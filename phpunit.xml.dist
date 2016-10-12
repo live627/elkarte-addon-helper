@@ -10,7 +10,7 @@
 		</testsuite>
 	</testsuites>
   <logging>
-    <log type="coverage-clover" target="coverage.cloverxml"/>
+    <log type="coverage-clover" target="coverage.clover.xml"/>
   <log type="coverage-text" target="php://stdout" />
   </logging>
 
