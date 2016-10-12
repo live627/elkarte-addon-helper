@@ -60,6 +60,14 @@ class NonceTest extends \PHPUnit_Framework_TestCase
         $this->assertSame(90, $actual);
     }
 
+    /**
+     * @expectedException \InvalidArgumentException
+     */
+    public function testTtlNotInt()
+    {
+        $this->loader->setTtl(true);
+    }
+
     public function testMissingSessionToken()
     {
         $actual = $this->loader->checkAttack();
