@@ -43,6 +43,6 @@ class Dispatcher
         isAllowedTo($thisSubAction[1]);
 
         // Calls a private function based on the sub-action
-        $obj->$thisSubAction[0]();
+        $obj->{$thisSubAction[0]}();
     }
 }
