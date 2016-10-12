@@ -180,11 +180,11 @@ public $boardUrl = '';
      * Ohara automatically adds the value of {@link $var} plus an underscore
      * to match the exact $txt key when fetching the var
      *
-     * @access protected
+     * @access private
      * @param string $var The name of the $txt key you want to retrieve
      * @return boolean
      */
-    protected function setText($var)
+    private function setText($var)
     {
         global $txt;
 

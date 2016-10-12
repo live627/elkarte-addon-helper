@@ -45,7 +45,7 @@ class DataValidator extends \Data_Validator
     *
     * @return boolean Whether the regex is valid
     */
-    public function processRegex($input)
+    private function processRegex($input)
     {
         // Turn off all error reporting
         $e = error_reporting(0);

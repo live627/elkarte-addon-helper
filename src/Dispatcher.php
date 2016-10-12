@@ -32,12 +32,7 @@ class Dispatcher
         $thisSubAction = $obj->subActions[$sa];
 
         // This area is wide open.
-        loadTemplate('LiveGallery');
-        if (!empty($area) && is_callable('template_'.$area.'_'.$sa)) {
-            $context['sub_template'] = $area.'_'.$sa;
-        } else {
-            $context['sub_template'] = $sa;
-        }
+        $this->loadSubTemplate($area, $sa);
 
         // Preemptively set a page title.
         $context['page_title'] = $obj->text('title');
@@ -48,5 +43,23 @@ class Dispatcher
 
         // Calls a private function based on the sub-action
         $obj->{$thisSubAction[0]}();
+	}
+
+	/**
+	 * Load a sub-template.
+	 *
+	 * @param string $area
+	 * @param string $sa
+	 */
+	private function loadSubTemplate($area, $sa)
+	{
+        global $context;
+
+        loadTemplate('LiveGallery');
+        if (!empty($area) && is_callable('template_'.$area.'_'.$sa)) {
+            $context['sub_template'] = $area.'_'.$sa;
+        } else {
+            $context['sub_template'] = $sa;
+        }
     }
 }
