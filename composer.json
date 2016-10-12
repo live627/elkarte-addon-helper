@@ -22,7 +22,7 @@
   ],
   "require": {
     "php": ">=5.5.0",
-    "suki/ohara": "~1.0",
+    "suki/ohara": "1.0.*",
     "paragonie/random_compat": "~2.0",
     "mnapoli/simplex": "0.2.1",
     "onedal/php-sqlite-logger": "v1.0.1",
