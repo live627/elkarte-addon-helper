@@ -51,6 +51,9 @@ class Nonce
      * Check CSRF tokens match between session and $origin.
      * Make sure you generated a token in the form before checking it.
      *
+     * @access public
+     * @throws Exceptions\MissingDataException if token not in session
+     * @throws Exceptions\MissingDataException if token not POSTed
      * @return bool Returns false if a CSRF attack is detected, true otherwise.
      */
     public function check()
@@ -63,26 +66,44 @@ class Nonce
         if (!$this->request->request->has($this->key)) {
             throw new Exceptions\MissingDataException('Missing CSRF form token');
         }
-
-        // Origin checks
-        if (sha1( $this->request-> getClientIp() . $this->request->headers->get('User-Agent')) != substr(base64_decode($this->hash), 10, 40)) {
-            throw new Exceptions\BadCombinationException('Form origin does not match token origin.');
-        }
-
-        // Check if session token matches form token
-        if ($this->request->request->get($this->key) !== $this->hash) {
-            throw new Exceptions\BadCombinationException('Invalid CSRF token');
-        }
-
-        // Check for token expiration
-        if ($this->ttl !== null && is_int($this->ttl) && intval(substr(base64_decode($this->hash), 0, 10)) + $this->ttl < time()) {
-            throw new \RangeException('CSRF token has expired.');
-        }
+        $this->checkOrigin();
+        $this->checkExpiration();
 
         // Free up session token for one-time CSRF token usage.
         Session::pull($this->key);
 
         return true;
+    }
+
+    /**
+     * Check token origin (client IP and user agent) match with what
+     * the client (usually a web browser) tells us.
+     *
+     * @access private
+     * @throws Exceptions\BadCombinationException if session token matches form token
+     * @throws Exceptions\BadCombinationException if client data doesn't match
+     */
+    private function checkOrigin()
+    {
+        if (sha1( $this->request-> getClientIp() . $this->request->headers->get('User-Agent')) != substr(base64_decode($this->hash), 10, 40)) {
+            throw new Exceptions\BadCombinationException('Form origin does not match token origin.');
+        }
+        if ($this->request->request->get($this->key) !== $this->hash) {
+            throw new Exceptions\BadCombinationException('Invalid CSRF token');
+        }
+    }
+
+    /**
+     * Check for token expiration
+     *
+     * @access private
+     * @throws \RangeException if it expired
+     */
+    private function checkExpiration()
+    {
+        if ($this->ttl !== null && is_int($this->ttl) && intval(substr(base64_decode($this->hash), 0, 10)) + $this->ttl < time()) {
+            throw new \RangeException('CSRF token has expired.');
+        }
     }
 
     /**
