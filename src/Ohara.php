@@ -155,6 +155,16 @@ public $boardUrl = '';
     }
 
     /**
+     * @param string $permission
+     * @access public
+     * @return bool
+     */
+    public function isAllowedTo($permission)
+    {
+        return isAllowedTo($permission);
+    }
+
+    /**
      * Getter for {@link $text} property.
      *
      * @access public

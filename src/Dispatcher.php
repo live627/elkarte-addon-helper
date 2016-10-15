@@ -35,7 +35,7 @@ class Dispatcher
 
         // This area is reserved - do this here since the menu code does not.
         if (!empty($thisSubAction[1]))
-            isAllowedTo($thisSubAction[1]);
+            $obj->isAllowedTo($thisSubAction[1]);
 
         // Calls a private function based on the sub-action
         $obj->{$thisSubAction[0]}();
