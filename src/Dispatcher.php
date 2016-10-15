@@ -16,11 +16,6 @@ class Dispatcher
     {
         global $context;
 
-        // Load up all the tabs...
-        $context[$context['admin_menu_name']]['tab_data'] = array(
-            'title' => $obj->text('title'),
-            'description' => $obj->text('desc'),
-        );
         $request = $obj->getContainer()->get('request');
         $sa = $request->query->get('sa');
         $area = $request->query->get('area');
@@ -33,6 +28,7 @@ class Dispatcher
 
         // This area is wide open.
         $this->loadSubTemplate($area, $sa);
+        $this->setTabData($obj, $sa);
 
         // Preemptively set a page title.
         $context['page_title'] = $obj->text('title');
@@ -43,16 +39,32 @@ class Dispatcher
 
         // Calls a private function based on the sub-action
         $obj->{$thisSubAction[0]}();
-	}
+    }
 
-	/**
-	 * Load a sub-template.
-	 *
-	 * @param string $area
-	 * @param string $sa
-	 */
-	private function loadSubTemplate($area, $sa)
-	{
+    /**
+     * Load up all the tabs.
+     *
+     * @param Ohara $obj
+     * @param string $sa
+     */
+    private function setTabData(Ohara $obj, $sa)
+    {
+        global $context;
+
+        $context[$context['admin_menu_name']]['tab_data'] = array(
+            'title' => $obj->text('title'),
+            'description' => $obj->text('desc'),
+        );
+    }
+
+    /**
+     * Load a sub-template.
+     *
+     * @param string $area
+     * @param string $sa
+     */
+    private function loadSubTemplate($area, $sa)
+    {
         global $context;
 
         loadTemplate('LiveGallery');

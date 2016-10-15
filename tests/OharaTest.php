@@ -4,10 +4,10 @@ namespace live627\AddonHelper\Tests;
 
 use live627\AddonHelper\Ohara;
 
-//~ require_once(__DIR__ . '/../vendor/elkarte/elkarte/tests/travis-ci/bootstrap.php');
 require_once(__DIR__ . '/bootstrap.php');
 
 $txt['months_title'] = 'Months';
+$txt['MockOharaedit_desc'] = 'edit description';
 $txt['MockOhara_months'] = array(1 => 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
 
 $modSettings['months_title'] = 'Months';
@@ -17,10 +17,10 @@ $modSettings['MockOhara_months'] = array(1 => 'January', 'February', 'March', 'A
 $context['admin_menu_name']='MockOhara';
 $context['MockOhara']=['tab_data'=>[]];
 
-		$user_info = array(
-			'is_admin' => true,
-			'is_guest' => false,
-		);
+$user_info = array(
+    'is_admin' => true,
+    'is_guest' => false,
+);
 
 class MockOhara extends Ohara
 {
