@@ -10,6 +10,8 @@
 
 namespace live627\AddonHelper;
 
+use Symfony\Component\HttpFoundation\Request;
+
 class Nonce
 {
     /**
@@ -36,7 +38,7 @@ class Nonce
      * @param string $key The session and $origin key where to find the token.
      * @param int $ttl (Facultative) Makes the token expire after $this->ttl seconds. (null = never)
      */
-    public function __construct(Ohara $obj, $key = null, $ttl = 900)
+    public function __construct(Request $request, $key = null, $ttl = 900)
     {
         if (!isset($key)) {
             $this->key = 'csrf_' . bin2hex(random_bytes(8));
@@ -45,7 +47,7 @@ class Nonce
             throw new \InvalidArgumentException('Integer expected: $ttl');
         }
         $this->ttl = $ttl;
-        $this->request = $obj->getContainer()->get('request');
+        $this->request = $request;
     }
     /**
      * Check CSRF tokens match between session and $origin.

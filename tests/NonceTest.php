@@ -36,8 +36,8 @@ class NonceTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
 		$obj=new MockOhara;
-        $this->loader = new MockNonce($obj);
         $this->request = $obj->getContainer()->get('request');
+        $this->loader = new Nonce($this->request);
     }
 
     public function testKey()
