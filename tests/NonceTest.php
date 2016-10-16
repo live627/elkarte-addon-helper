@@ -2,27 +2,9 @@
 
 namespace live627\AddonHelper\Tests;
 
-use live627\AddonHelper\ServiceProvider;
+use live627\AddonHelper\Nonce;
 
 require_once(__DIR__ . '/OharaTest.php');
-
-class MockNonce extends \live627\AddonHelper\Nonce
-{
-    public function checkAttack()
-    {
-        try
-        {
-            $this->check();
-            $result = 'CSRF check passed';
-        }
-        catch (\Exception $e)
-        {
-            // CSRF attack detected
-            $result = $e->getMessage();
-        }
-        return $result;
-    }
-}
 
 class NonceTest extends \PHPUnit_Framework_TestCase
 {
@@ -35,7 +17,7 @@ class NonceTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-		$obj=new MockOhara;
+        $obj=new MockOhara;
         $this->request = $obj->getContainer()->get('request');
         $this->loader = new Nonce($this->request);
     }
@@ -61,41 +43,57 @@ class NonceTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \InvalidArgumentException
+     * @expectedException InvalidArgumentException
      */
     public function testTtlNotInt()
     {
         $this->loader->setTtl(true);
     }
 
-    public function testMissingSessionToken()
+    /**
+     * @expectedException InvalidArgumentException
+     */
+    public function testTtlInConstructorNotInt()
     {
-        $actual = $this->loader->checkAttack();
-        $this->assertSame('Missing CSRF session token', $actual);
+        new Nonce($this->request, null, true);
     }
 
+    /**
+     * @expectedException live627\AddonHelper\Exceptions\MissingDataException
+     */
+    public function testMissingSessionToken()
+    {
+        $this->loader->check();
+    }
+
+    /**
+     * @expectedException live627\AddonHelper\Exceptions\MissingDataException
+     */
     public function testMissingFormToken()
     {
         $_SESSION[$this->loader->getKey()] = true;
-        $actual = $this->loader->checkAttack();
-        $this->assertSame('Missing CSRF form token', $actual);
+        $this->loader->check();
     }
 
+    /**
+     * @expectedException live627\AddonHelper\Exceptions\BadCombinationException
+     */
     public function testTokenOriginMismatch()
     {
         $this->generate();
         $this->request->headers->set('User-Agent', '');
         $this->request->request->set($this->loader->getKey(), true);
-        $actual = $this->loader->checkAttack();
-        $this->assertSame('Form origin does not match token origin.', $actual);
+        $this->loader->check();
     }
 
+    /**
+     * @expectedException live627\AddonHelper\Exceptions\BadCombinationException
+     */
     public function testTokenMismatch()
     {
         $this->generate();
         $this->request->request->set($this->loader->getKey(), true);
-        $actual = $this->loader->checkAttack();
-        $this->assertSame('Invalid CSRF token', $actual);
+        $this->loader->check();
     }
 
     public function generate()
@@ -106,13 +104,14 @@ class NonceTest extends \PHPUnit_Framework_TestCase
         $this->request->request->set($this->loader->getKey(), $hash);
     }
 
+    /**
+     * @expectedException RangeException
+     */
     public function testExpiredToken()
     {
         $this->generate();
         $this->loader->setTtl(-90);
-        $actual = $this->loader->checkAttack();
-        $this->assertSame('CSRF token has expired.', $actual);
-        $this->loader->setTtl(90);
+        $this->loader->check();
     }
 
     public function testSuccess()
