@@ -54,6 +54,9 @@ class Dispatcher
         $context[$context['admin_menu_name']]['tab_data'] = array(
             'title' => $obj->text('title'),
             'description' => $obj->text('desc'),
+            $sa => array(
+                'description' => $obj->text($sa.'_desc'),
+            )
         );
     }
 

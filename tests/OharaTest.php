@@ -113,6 +113,7 @@ class OharaTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->loader->allowedTo('test'));
         $this->assertSame('e', $i);
         $this->assertSame('mock_edit', $context['sub_template']);
+        $this->assertSame('edit description', $context['MockOhara']['tab_data']['edit']['description']);
     }
 
     public function testText()
