@@ -18,8 +18,8 @@ class ServiceProvider implements s
     public function getServices()
     {
         return [
-            'database' => function() {
-                return new Database;
+            'linktree' => function() {
+                return new Linktree;
             },
             'dispatcher' => function() {
                 return new Dispatcher;
