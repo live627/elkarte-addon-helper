@@ -87,7 +87,7 @@ public $boardUrl = '';
         $this->boardUrl = $boardurl;
         $this->container = $container;
         $this->container->register(new ServiceProvider);
-        $this->nonce = new Nonce($this->getContainer()->get('request'), md5(static::class));
+        $this->nonce = new Nonce($this, md5(static::class));
     }
 
     /**
