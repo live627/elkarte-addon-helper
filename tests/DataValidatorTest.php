@@ -10,7 +10,8 @@ class DataValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $this->validator = new DataValidator;
+        $obj=new MockOhara;
+        $this->validator = $obj->getContainer()->get('datavalidator');
     }
 
     /**
