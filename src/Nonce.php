@@ -35,7 +35,7 @@ class Nonce
     private $request;
 
     /**
-     * @param string $key The session and $origin key where to find the token.
+     * @param string $key The token key.
      * @param int $ttl (Facultative) Makes the token expire after $this->ttl seconds. (null = never)
      */
     public function __construct(Request $request, $key = null, $ttl = 900)
@@ -50,8 +50,8 @@ class Nonce
         $this->request = $request;
     }
     /**
-     * Check CSRF tokens match between session and $origin.
-     * Make sure you generated a token in the form before checking it.
+     * Check CSRF tokens match between session and POST.
+     * Make sure you have generated a token in the form before checking it.
      *
      * @access public
      * @throws Exceptions\MissingDataException if token not in session
