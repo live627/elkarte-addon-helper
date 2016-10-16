@@ -26,10 +26,10 @@ class Collection implements \IteratorAggregate
      * This method is chainable.
      *
      * @param mixed  The value to set
-     * @access protected
+     * @access public
      * @return Collection
      */
-    protected function add($item)
+    public function add($item)
     {
         $this->items[] = $item;
 
