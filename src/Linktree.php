@@ -21,13 +21,10 @@ class Linktree
         foreach ($this->collection as list ($name, $url, $before, $after)) {
             $item = array(
                 'name' => $name,
+                'url' => $url,
+                'extra_before' => $before,
+                'extra_after' => $after
             );
-            if ($url !== null)
-                $item['url'] = $url;
-            if ($before !== null)
-                $item['extra_before'] = $before;
-            if ($after !== null)
-                $item['extra_after'] = $after;
 
             $context['linktree'][] = $item;
         }
