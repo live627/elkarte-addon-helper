@@ -28,6 +28,7 @@ class MenuSection
             if (property_exists($section, $var))
                 $section->{$var} = $val;
         }
+        if (isset($arr['areas']))
         foreach ($arr['areas'] as $var => $area)
         {
             $section->addArea($var, $area);
