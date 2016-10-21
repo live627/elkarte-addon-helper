@@ -51,7 +51,7 @@ class Dispatcher
     {
         global $context;
 
-        $context[$context['admin_menu_name']]['tab_data'] = array(
+        $context['menu_data_' . $context['max_menu_id']]['tab_data'] = array(
             'title' => $obj->text('title'),
             'description' => $obj->text('desc'),
             $sa => array(

@@ -105,6 +105,7 @@ class OharaTest extends \PHPUnit_Framework_TestCase
     {
         global $context, $i;
 
+        $context['max_menu_id']='MockOhara';
         $request = $this->loader->getContainer()->get('request');
         $request->query->set('sa','edit');
         $request->query->set('area','mock');
@@ -113,7 +114,7 @@ class OharaTest extends \PHPUnit_Framework_TestCase
         $this->assertTrue($this->loader->allowedTo('test'));
         $this->assertSame('e', $i);
         $this->assertSame('mock_edit', $context['sub_template']);
-        $this->assertSame('edit description', $context['MockOhara']['tab_data']['edit']['description']);
+        $this->assertSame('edit description', $context['menu_data_MockOhara']['tab_data']['edit']['description']);
     }
 
     public function testText()
