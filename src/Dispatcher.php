@@ -24,7 +24,6 @@ class Dispatcher
         if (!isset($obj->subActions[$sa])) {
             $sa = 'index';
         }
-        $thisSubAction = $obj->subActions[$sa];
 
         // This area is wide open.
         $this->loadSubTemplate($area, $sa);
@@ -33,12 +32,7 @@ class Dispatcher
         // Preemptively set a page title.
         $context['page_title'] = $obj->text('title');
 
-        // This area is reserved - do this here since the menu code does not.
-        if (!empty($thisSubAction[1]))
-            $obj->isAllowedTo($thisSubAction[1]);
-
-        // Calls a private function based on the sub-action
-        $obj->{$thisSubAction[0]}();
+        $this->callSubAction($obj, $sa);
     }
 
     /**
@@ -58,6 +52,24 @@ class Dispatcher
                 'description' => $obj->text($sa.'_desc'),
             )
         );
+    }
+
+    /**
+     * Call a function based on the sub-action.
+     * Also ensure that the action is allowed.
+     *
+     * @param Ohara $obj
+     * @param string $sa
+     */
+    private function callSubAction(Ohara $obj, $sa)
+    {
+        $thisSubAction = $obj->subActions[$sa];
+
+        // This area is reserved - do this here since the menu code does not.
+        if (!empty($thisSubAction[1]))
+            $obj->isAllowedTo($thisSubAction[1]);
+
+        $obj->{$thisSubAction[0]}();
     }
 
     /**
