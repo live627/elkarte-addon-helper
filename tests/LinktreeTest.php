@@ -8,8 +8,6 @@ require_once(__DIR__ . '/OharaTest.php');
 
 class LinktreeTest extends \PHPUnit_Framework_TestCase
 {
-    protected $l;
-
     public function getLinktree()
     {
         global $context;
@@ -23,8 +21,7 @@ class LinktreeTest extends \PHPUnit_Framework_TestCase
 
         $context['linktree'] = [];
 
-        $obj=new MockOhara;
-        $this->l = $obj->getContainer()->get('linktree')->add(
+         (new MockOhara)->getContainer()->get('linktree')->add(
             'Foo',
             '/vendor/foo',
             'before foo',
