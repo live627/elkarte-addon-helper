@@ -16,10 +16,10 @@ class MenuSubsection
      * @var string   $label       Text label for this subsection.
      * @var string[] $permission  Array of permissions to check for this subsection.
      * @var bool     $default     Is this the default subaction - if not set for any will default to first...
-     * @var bool     $enabled     Bool to say whether this should be enabled or not.
+     * @var bool     $enabled     Bool to say whether this should be enabled.
      * @var string[] $active      Set the button active for other subsections.
      */
-    public $label = '', $permission = [], $enabled = true, $default = false, $active = [];
+    public $label = '', $permission = [], $default = false, $enabled = true, $active = [];
 
     /**
      * MenuSubsection constructor.
@@ -30,7 +30,7 @@ class MenuSubsection
      * @param bool   $default
      * @param string[] $active
      */
-    public function __construct($label, array $permission, $enabled = true, $default = false, array $active = [])
+    public function __construct($label, array $permission, $default = false, $enabled = true, array $active = [])
     {
         $this->label = $label;
         $this->permission = $permission;
