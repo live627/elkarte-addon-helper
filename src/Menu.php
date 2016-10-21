@@ -48,13 +48,15 @@ class Menu
 
     private function buildLinktree()
     {
+        global $context;
+
         $linktree = $this->obj->getContainer()->get('linktree')->add(
             $this->obj->text('title'), $this->obj->scriptUrl.'?action='.$context['current_action']);
-        if (isset($this->incData['current_area']) && $this->incData['current_area'] != 'index') {
+        if (isset($this->incData['current_area'])) {
             $linktree->add($this->incData['label'],
                 $this->obj->scriptUrl.'?action='.$context['current_action'].';area='.$this->incData['current_area']);
         }
-        if (!empty($this->incData['current_subsection']) && $this->incData['subsections'][$this->incData['current_subsection']][0] != $this->incData['label']) {
+        if (current(array_keys($this->incData['subsections'])) != $this->incData['current_subsection']) {
             $linktree->add($this->incData['subsections'][$this->incData['current_subsection']][0],
                 $this->obj->scriptUrl.'?action='.$context['current_action'].';area='.$this->incData['current_area'].';sa='.$this->incData['current_subsection']);
         }

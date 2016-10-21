@@ -43,7 +43,8 @@ class MenuTest extends \PHPUnit_Framework_TestCase
                         'function' => function () {},
                         'subsections' => array(
                             'sub1' => new MenuSubsection('Sub One', array('admin_forum')),
-                            'sub2' => new MenuSubsection('Sub Two', array('admin_forum'), false, false)),
+                            'sub2' => new MenuSubsection('Sub Two', array('admin_forum'), true),
+                            'sub3' => new MenuSubsection('Sub Three', array('admin_forum'), false, false)),
                     )),
                     'area4' => MenuArea::buildFromArray(array(
                         'label' => 'Area4 Label',
@@ -86,9 +87,9 @@ class MenuTest extends \PHPUnit_Framework_TestCase
         $this->assertArrayNotHasKey('section3', $result['sections']);
         $this->assertCount(2, $result['sections']);
         $this->assertCount(1, $result['sections']['section2']['areas']);
-        $this->assertCount(2, $result['sections']['section2']['areas']['area3']['subsections']);
+        $this->assertCount(3, $result['sections']['section2']['areas']['area3']['subsections']);
 
-        $this->assertTrue($result['sections']['section2']['areas']['area3']['subsections']['sub2']['disabled']);
+        $this->assertTrue($result['sections']['section2']['areas']['area3']['subsections']['sub3']['disabled']);
         $this->assertTrue($result['sections']['section2']['areas']['area3']['subsections']['sub1']['is_first']);
         $this->assertArrayNotHasKey('area2', $result['sections']['section2']['areas']);
     }
@@ -119,7 +120,7 @@ class MenuTest extends \PHPUnit_Framework_TestCase
         $this->menu->addOption('current_area', 'area3');
         $this->menu->execute();
 
-        $this->assertContains('sub1', $context['linktree'][2]['url']);
+        $this->assertContains('sub2', $context['linktree'][2]['url']);
         $this->assertCount(3, $context['linktree']);
     }
 }
