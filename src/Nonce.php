@@ -38,12 +38,10 @@ class Nonce
      */
     public function __construct(Ohara $obj, $key = null, $ttl = 900)
     {
-        if (!isset($key)) {
-            $this->key = 'csrf_' . bin2hex(random_bytes(8));
-        }
         if (!is_int($ttl)) {
             throw new \InvalidArgumentException('Integer expected: $ttl');
         }
+        $this->key = $key?:'csrf_' . bin2hex(random_bytes(8));
         $this->ttl = $ttl;
         $this->request = $obj->getContainer()->get('request');
     }
