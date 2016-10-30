@@ -57,6 +57,11 @@ class Nonce
     public function check()
     {
         $this->hash = Session::get($this->key);
+
+        // Free up session token for one-time CSRF token usage.
+        Session::pull($this->key);
+
+        // Not there?
         if ($this->hash === false) {
             throw new Exceptions\MissingDataException('Missing CSRF session token');
         }
@@ -66,9 +71,6 @@ class Nonce
         }
         $this->checkOrigin();
         $this->checkExpiration();
-
-        // Free up session token for one-time CSRF token usage.
-        Session::pull($this->key);
 
         return true;
     }
