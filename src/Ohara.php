@@ -161,7 +161,8 @@ public $boardUrl = '';
      */
     public function isAllowedTo($permission)
     {
-        return isAllowedTo($permission);
+        if (!$this->allowedTo($permission))
+            throw new \Elk_Exception('no_access', false);
     }
 
     /**
