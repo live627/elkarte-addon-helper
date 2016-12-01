@@ -10,7 +10,7 @@ class DataValidatorTest extends \PHPUnit_Framework_TestCase
 
     public function setUp()
     {
-        $obj=new MockOhara;
+        $obj = new MockOhara;
         $this->validator = $obj->getContainer()->get('datavalidator');
     }
 
@@ -27,7 +27,7 @@ class DataValidatorTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('42', false),
-            array('/\d/', true)
+            array('/\d/', true),
         );
     }
 
@@ -45,7 +45,11 @@ class DataValidatorTest extends \PHPUnit_Framework_TestCase
     {
         return array(
             array('<img src="javascript:evil();" onload="evil();" />', true, ''),
-            array('c<STYLE>li {list-style-image:url("javascript:alert(\'XSS\')");}</STYLE><UL><LI>XSS', true, 'c<ul><li>XSS</li></ul>')
+            array(
+                'c<STYLE>li {list-style-image:url("javascript:alert(\'XSS\')");}</STYLE><UL><LI>XSS',
+                true,
+                'c<ul><li>XSS</li></ul>',
+            ),
         );
     }
 

@@ -9,6 +9,6 @@ class DatabaseTest extends \PHPUnit_Framework_TestCase
     public function test()
     {
         Database::getInstance();
-        $this->assertSame('1a', Database::quote('{int:one}a',['one'=>1]));
+        $this->assertSame('1a', Database::quote('{int:one}a', ['one' => 1]));
     }
 }

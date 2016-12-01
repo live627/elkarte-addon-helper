@@ -1,11 +1,11 @@
 <?php
 
 /**
- * @package AddonHelper
- * @version 1.0
- * @author John Rayes <live627@gmail.com>
+ * @package   AddonHelper
+ * @version   1.0
+ * @author    John Rayes <live627@gmail.com>
  * @copyright Copyright (c) 2011-2016, John Rayes
- * @license http://opensource.org/licenses/MIT MIT
+ * @license   http://opensource.org/licenses/MIT MIT
  *
  *
  * This file contains code by:
@@ -38,19 +38,19 @@ class Ohara extends \Action_Controller
      */
     protected $text = [];
 
-/**
- * URL to the script currently running
- *
- * @var string
- */
-public $scriptUrl = '';
+    /**
+     * URL to the script currently running
+     *
+     * @var string
+     */
+    public $scriptUrl = '';
 
-/**
- * URL to Elkarte
- *
- * @var string
- */
-public $boardUrl = '';
+    /**
+     * URL to Elkarte
+     *
+     * @var string
+     */
+    public $boardUrl = '';
 
     /**
      * Array of subactions.
@@ -59,7 +59,7 @@ public $boardUrl = '';
      * @var array
      */
     public $subActions = [
-        'index' => ['actionIndex', 'admin_forum']
+        'index' => ['actionIndex', 'admin_forum'],
     ];
 
     /**
@@ -108,7 +108,9 @@ public $boardUrl = '';
      * @abstracting \Action_Controller
      * @return void
      */
-    public function action_index() {}
+    public function action_index()
+    {
+    }
 
     /**
      * Getter for {@link $name} property.
@@ -146,6 +148,7 @@ public $boardUrl = '';
 
     /**
      * @param string $permission
+     *
      * @access public
      * @return bool
      */
@@ -156,20 +159,24 @@ public $boardUrl = '';
 
     /**
      * @param string $permission
+     *
      * @access public
      * @return bool
      */
     public function isAllowedTo($permission)
     {
-        if (!$this->allowedTo($permission))
+        if (!$this->allowedTo($permission)) {
             throw new \Elk_Exception('no_access', false);
+        }
     }
 
     /**
      * Getter for {@link $text} property.
      *
      * @access public
+     *
      * @param string $var The name of the $txt key you want to retrieve
+     *
      * @return bool|string
      */
     public function text($var)
@@ -177,11 +184,13 @@ public $boardUrl = '';
         global $txt;
 
         // This should be extended by somebody else...
-        if (empty($this->name) || empty($var))
+        if (empty($this->name) || empty($var)) {
             return false;
+        }
 
-        if (!isset($this->text[$var]))
+        if (!isset($this->text[$var])) {
             $this->setText($var);
+        }
 
         return $this->text[$var];
     }
@@ -192,7 +201,9 @@ public $boardUrl = '';
      * to match the exact $txt key when fetching the var
      *
      * @access private
+     *
      * @param string $var The name of the $txt key you want to retrieve
+     *
      * @return boolean
      */
     private function setText($var)
@@ -202,14 +213,15 @@ public $boardUrl = '';
         // Load the mod's language file.
         loadLanguage($this->name);
 
-            $this->text[$var] = false;
-        if (!empty($txt[$this->name . '_' . $var])) {
-            $this->text[$var] = $txt[$this->name . '_' . $var];
-        } elseif (!empty($txt[$this->name . $var])) {
-            $this->text[$var] = $txt[$this->name . $var];
+        $this->text[$var] = false;
+        if (!empty($txt[$this->name.'_'.$var])) {
+            $this->text[$var] = $txt[$this->name.'_'.$var];
+        } elseif (!empty($txt[$this->name.$var])) {
+            $this->text[$var] = $txt[$this->name.$var];
         } elseif (!empty($txt[$var])) {
             $this->text[$var] = $txt[$var];
         }
+
         return $this->text[$var] !== false;
     }
 
@@ -229,6 +241,7 @@ public $boardUrl = '';
      * regardless of what its value is
      *
      * @param string $var The name of the $modSetting key you want to retrieve
+     *
      * @access public
      * @return boolean
      */
@@ -236,10 +249,11 @@ public $boardUrl = '';
     {
         global $modSettings;
 
-        if (empty($var))
+        if (empty($var)) {
             return false;
+        }
 
-            return !empty($modSettings[$this->name .'_'. $var]);
+        return !empty($modSettings[$this->name.'_'.$var]);
     }
 
     /**
@@ -247,6 +261,7 @@ public $boardUrl = '';
      * uses Ohara::enable() to determinate if the var exists
      *
      * @param string $var The name of the $modSetting key you want to retrieve
+     *
      * @access public
      * @return mixed|boolean
      */
@@ -255,14 +270,15 @@ public $boardUrl = '';
         global $modSettings;
 
         // This should be extended by somebody else...
-        if (empty($this->name) || empty($var))
+        if (empty($this->name) || empty($var)) {
             return false;
+        }
 
-        if (true === $this->enable($var))
-            return $modSettings[$this->name .'_'. $var];
-
-        else
+        if (true === $this->enable($var)) {
+            return $modSettings[$this->name.'_'.$var];
+        } else {
             return false;
+        }
     }
 
     /**
@@ -270,6 +286,7 @@ public $boardUrl = '';
      * useful to check external $modSettings vars
      *
      * @param string $var The name of the $modSetting key you want to retrieve
+     *
      * @access public
      * @return mixed|boolean
      */
@@ -278,16 +295,18 @@ public $boardUrl = '';
         global $modSettings;
 
         // This should be extended by somebody else...
-        if (empty($this->name))
+        if (empty($this->name)) {
             return false;
+        }
 
-        if (empty($var))
+        if (empty($var)) {
             return false;
+        }
 
-        if (isset($modSettings[$var]))
+        if (isset($modSettings[$var])) {
             return $modSettings[$var];
-
-        else
+        } else {
             return false;
+        }
     }
 }

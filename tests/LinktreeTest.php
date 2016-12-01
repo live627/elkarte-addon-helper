@@ -4,7 +4,7 @@ namespace live627\AddonHelper\Tests;
 
 use live627\AddonHelper\ServiceProvider;
 
-require_once(__DIR__ . '/OharaTest.php');
+require_once(__DIR__.'/OharaTest.php');
 
 class LinktreeTest extends \PHPUnit_Framework_TestCase
 {
@@ -21,7 +21,7 @@ class LinktreeTest extends \PHPUnit_Framework_TestCase
 
         $context['linktree'] = [];
 
-         (new MockOhara)->getContainer()->get('linktree')->add(
+        (new MockOhara)->getContainer()->get('linktree')->add(
             'Foo',
             '/vendor/foo',
             'before foo',
@@ -40,7 +40,7 @@ class LinktreeTest extends \PHPUnit_Framework_TestCase
             'name' => 'Foo',
             'url' => '/vendor/foo',
             'extra_before' => 'before foo',
-            'extra_after' => 'after foo'
+            'extra_after' => 'after foo',
         );
         $this->assertContains($expect, $this->getLinktree());
 
@@ -48,7 +48,7 @@ class LinktreeTest extends \PHPUnit_Framework_TestCase
             'name' => 'BarDoom',
             'url' => '/vendor/foo.bardoom',
             'extra_before' => 'before bardoom',
-            'extra_after' => 'after bardoom'
+            'extra_after' => 'after bardoom',
         );
         $this->assertContains($expect, $this->getLinktree());
     }
@@ -59,7 +59,7 @@ class LinktreeTest extends \PHPUnit_Framework_TestCase
             'name' => 'Baz Dib',
             'url' => '/vendor/baz.dib',
             'extra_before' => 'before baz',
-            'extra_after' => 'after baz'
+            'extra_after' => 'after baz',
         );
         $this->assertNotContains($expect, $this->getLinktree());
     }

@@ -1,11 +1,11 @@
 <?php
 
 /**
- * @package AddonHelper
- * @version 1.0
- * @author John Rayes <live627@gmail.com>
+ * @package   AddonHelper
+ * @version   1.0
+ * @author    John Rayes <live627@gmail.com>
  * @copyright Copyright (c) 2011-2016, John Rayes
- * @license http://opensource.org/licenses/MIT MIT
+ * @license   http://opensource.org/licenses/MIT MIT
  */
 
 namespace live627\AddonHelper;
@@ -13,7 +13,7 @@ namespace live627\AddonHelper;
 class Menu
 {
     private $options, $sections;
-    private $obj, $incData = [], $doLinktree=true;
+    private $obj, $incData = [], $doLinktree = true;
 
     public function createMenu()
     {
@@ -51,14 +51,20 @@ class Menu
         global $context;
 
         $linktree = $this->obj->getContainer()->get('linktree')->add(
-            $this->obj->text('title'), $this->obj->scriptUrl.'?action='.$context['current_action']);
+            $this->obj->text('title'),
+            $this->obj->scriptUrl.'?action='.$context['current_action']
+        );
         if (isset($this->incData['current_area'])) {
-            $linktree->add($this->incData['label'],
-                $this->obj->scriptUrl.'?action='.$context['current_action'].';area='.$this->incData['current_area']);
+            $linktree->add(
+                $this->incData['label'],
+                $this->obj->scriptUrl.'?action='.$context['current_action'].';area='.$this->incData['current_area']
+            );
         }
         if (current(array_keys($this->incData['subsections'])) != $this->incData['current_subsection']) {
-            $linktree->add($this->incData['subsections'][$this->incData['current_subsection']][0],
-                $this->obj->scriptUrl.'?action='.$context['current_action'].';area='.$this->incData['current_area'].';sa='.$this->incData['current_subsection']);
+            $linktree->add(
+                $this->incData['subsections'][$this->incData['current_subsection']][0],
+                $this->obj->scriptUrl.'?action='.$context['current_action'].';area='.$this->incData['current_area'].';sa='.$this->incData['current_subsection']
+            );
         }
         $linktree->execute();
     }
@@ -81,10 +87,10 @@ class Menu
         $this->options->add([$id, $val]);
     }
 
-    public function __construct(Ohara $obj, $doLinktree=true)
+    public function __construct(Ohara $obj, $doLinktree = true)
     {
-        $this->obj=$obj;
-        $this->doLinktree=$doLinktree;
+        $this->obj = $obj;
+        $this->doLinktree = $doLinktree;
         $this->options = new Collection;
         $this->sections = new Collection;
     }

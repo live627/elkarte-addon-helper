@@ -29,16 +29,16 @@ class MenuArea
 
     public static function buildFromArray(array $arr)
     {
-        $area=new self;
-        foreach ($arr as $var => $val)
-        {
-            if (property_exists($area, $var))
+        $area = new self;
+        foreach ($arr as $var => $val) {
+            if (property_exists($area, $var)) {
                 $area->{$var} = $val;
+            }
         }
-        if (isset($arr['subsections']))
-        foreach ($arr['subsections'] as $var => $subsection)
-        {
-            $area->addSubsection($var, $subsection);
+        if (isset($arr['subsections'])) {
+            foreach ($arr['subsections'] as $var => $subsection) {
+                $area->addSubsection($var, $subsection);
+            }
         }
 
         return $area;

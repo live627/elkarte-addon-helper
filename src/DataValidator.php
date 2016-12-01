@@ -1,11 +1,11 @@
 <?php
 
 /**
- * @package AddonHelper
- * @version 1.0
- * @author John Rayes <live627@gmail.com>
+ * @package   AddonHelper
+ * @version   1.0
+ * @author    John Rayes <live627@gmail.com>
  * @copyright Copyright (c) 2011-2016, John Rayes
- * @license http://opensource.org/licenses/MIT MIT
+ * @license   http://opensource.org/licenses/MIT MIT
  */
 
 namespace live627\AddonHelper;
@@ -18,16 +18,17 @@ class DataValidator extends \Data_Validator
      * Usage: '[key]' => 'regex'
      *
      * @param string $field
-     * @param array $input
-    *
-    * @return array
+     * @param array  $input
+     *
+     * @return array
      */
     protected function _validate_regex($field, $input)
     {
         global $php_errormsg;
 
-        if (!isset($input[$field]))
+        if (!isset($input[$field])) {
             return [];
+        }
 
         if (!$this->processRegex($input[$field])) {
             return array(
@@ -39,12 +40,12 @@ class DataValidator extends \Data_Validator
     }
 
     /**
-    * Test a regex
+     * Test a regex
      *
      * @param string $input The regex to test
-    *
-    * @return boolean Whether the regex is valid
-    */
+     *
+     * @return boolean Whether the regex is valid
+     */
     private function processRegex($input)
     {
         // Turn off all error reporting
@@ -53,18 +54,18 @@ class DataValidator extends \Data_Validator
         // Catch any errors the regex may produce.
         set_error_handler(array($this, 'handleError'));
 
-        $r=preg_match($input, null) !== false;
-            restore_error_handler();
-            error_reporting($e);
+        $r = preg_match($input, null) !== false;
+        restore_error_handler();
+        error_reporting($e);
 
         return $r;
     }
 
     /**
-    * Ignore errors
-    *
-    * @return boolean
-    */
+     * Ignore errors
+     *
+     * @return boolean
+     */
     public function handleError()
     {
         return false;
@@ -76,8 +77,8 @@ class DataValidator extends \Data_Validator
      * Usage: '[key]' => 'htmlpurifier'
      *
      * @param string $field The dirty HTML
-    *
-    * @return string The purified HTML
+     *
+     * @return string The purified HTML
      */
     protected function _sanitation_htmlpurifier($field)
     {

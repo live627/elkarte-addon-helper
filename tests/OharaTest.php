@@ -4,18 +4,44 @@ namespace live627\AddonHelper\Tests;
 
 use live627\AddonHelper\Ohara;
 
-require_once(__DIR__ . '/bootstrap.php');
+require_once(__DIR__.'/bootstrap.php');
 
 $txt['months_title'] = 'Months';
 $txt['MockOharaedit_desc'] = 'edit description';
-$txt['MockOhara_months'] = array(1 => 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+$txt['MockOhara_months'] = array(
+    1 => 'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+);
 
 $modSettings['months_title'] = 'Months';
-$modSettings['MockOhara']=1;
-$modSettings['MockOhara_months'] = array(1 => 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December');
+$modSettings['MockOhara'] = 1;
+$modSettings['MockOhara_months'] = array(
+    1 => 'January',
+    'February',
+    'March',
+    'April',
+    'May',
+    'June',
+    'July',
+    'August',
+    'September',
+    'October',
+    'November',
+    'December',
+);
 
-$context['admin_menu_name']='MockOhara';
-$context['MockOhara']=['tab_data'=>[]];
+$context['admin_menu_name'] = 'MockOhara';
+$context['MockOhara'] = ['tab_data' => []];
 
 $user_info = array(
     'is_admin' => true,
@@ -81,10 +107,11 @@ class OharaTest extends \PHPUnit_Framework_TestCase
         $actual = $this->loader->getContainer();
         $this->assertInstanceOf('Interop\Container\ContainerInterface', $actual);
 
-        if (is_callable([$this,'createMock']))
-        $mock = $this->createMock('Interop\Container\ContainerInterface');
-        else
-        $mock = $this->getMock('Interop\Container\ContainerInterface');
+        if (is_callable([$this, 'createMock'])) {
+            $mock = $this->createMock('Interop\Container\ContainerInterface');
+        } else {
+            $mock = $this->getMock('Interop\Container\ContainerInterface');
+        }
         $this->loader->setContainer($mock);
         $this->assertContains('Mock_ContainerInterface', get_class($mock));
         $actual = $this->loader->getContainer();
@@ -105,10 +132,10 @@ class OharaTest extends \PHPUnit_Framework_TestCase
     {
         global $context, $i;
 
-        $context['max_menu_id']='MockOhara';
+        $context['max_menu_id'] = 'MockOhara';
         $request = $this->loader->getContainer()->get('request');
-        $request->query->set('sa','edit');
-        $request->query->set('area','mock');
+        $request->query->set('sa', 'edit');
+        $request->query->set('area', 'mock');
         $this->loader->getContainer()->get('dispatcher')->dispatch($this->loader);
 
         $this->assertTrue($this->loader->allowedTo('test'));
@@ -139,10 +166,10 @@ class OharaTest extends \PHPUnit_Framework_TestCase
 
         $actual = array_filter($this->loader->getAllText());
         $this->assertTrue(is_array($actual));
-        $this->assertCount(2,$actual);
+        $this->assertCount(2, $actual);
         $actual = array_filter($this->o->getAllText());
         $this->assertTrue(is_array($actual));
-        $this->assertCount(1,$actual);
+        $this->assertCount(1, $actual);
     }
 
     public function testModSettings()

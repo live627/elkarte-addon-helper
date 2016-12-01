@@ -4,7 +4,7 @@ namespace live627\AddonHelper\Tests;
 
 use live627\AddonHelper\Nonce;
 
-require_once(__DIR__ . '/OharaTest.php');
+require_once(__DIR__.'/OharaTest.php');
 
 class NonceTest extends \PHPUnit_Framework_TestCase
 {
@@ -17,7 +17,7 @@ class NonceTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $obj=new MockOhara;
+        $obj = new MockOhara;
         $this->loader = new Nonce($obj);
         $this->request = $obj->getContainer()->get('request');
     }

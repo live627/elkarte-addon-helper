@@ -23,15 +23,15 @@ class MenuSection
     public static function buildFromArray(array $arr)
     {
         $section = new self;
-        foreach ($arr as $var => $val)
-        {
-            if (property_exists($section, $var))
+        foreach ($arr as $var => $val) {
+            if (property_exists($section, $var)) {
                 $section->{$var} = $val;
+            }
         }
-        if (isset($arr['areas']))
-        foreach ($arr['areas'] as $var => $area)
-        {
-            $section->addArea($var, $area);
+        if (isset($arr['areas'])) {
+            foreach ($arr['areas'] as $var => $area) {
+                $section->addArea($var, $area);
+            }
         }
 
         return $section;

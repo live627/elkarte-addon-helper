@@ -14,35 +14,43 @@ class MockBitwiseFlag extends \live627\AddonHelper\BitwiseFlag
         parent::__construct();
     }
 
-    public function isRegistered(){
+    public function isRegistered()
+    {
         return $this->isFlagSet(self::FLAG_REGISTERED);
     }
 
-    public function isActive(){
+    public function isActive()
+    {
         return $this->isFlagSet(self::FLAG_ACTIVE);
     }
 
-    public function isMember(){
+    public function isMember()
+    {
         return $this->isFlagSet(self::FLAG_MEMBER);
     }
 
-    public function isAdmin(){
+    public function isAdmin()
+    {
         return $this->isFlagSet(self::FLAG_ADMIN);
     }
 
-    public function setRegistered($value){
+    public function setRegistered($value)
+    {
         $this->setFlag(self::FLAG_REGISTERED, $value);
     }
 
-    public function setActive($value){
+    public function setActive($value)
+    {
         $this->setFlag(self::FLAG_ACTIVE, $value);
     }
 
-    public function setMember($value){
+    public function setMember($value)
+    {
         $this->setFlag(self::FLAG_MEMBER, $value);
     }
 
-    public function setAdmin($value){
+    public function setAdmin($value)
+    {
         $this->setFlag(self::FLAG_ADMIN, $value);
     }
 }

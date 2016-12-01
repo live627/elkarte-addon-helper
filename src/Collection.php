@@ -1,11 +1,11 @@
 <?php
 
 /**
- * @package AddonHelper
- * @version 1.0
- * @author John Rayes <live627@gmail.com>
+ * @package   AddonHelper
+ * @version   1.0
+ * @author    John Rayes <live627@gmail.com>
  * @copyright Copyright (c) 2011-2016, John Rayes
- * @license http://opensource.org/licenses/MIT MIT
+ * @license   http://opensource.org/licenses/MIT MIT
  */
 
 namespace live627\AddonHelper;
@@ -26,6 +26,7 @@ class Collection implements \IteratorAggregate
      * This method is chainable.
      *
      * @param mixed  The value to set
+     *
      * @access public
      * @return Collection
      */
@@ -39,7 +40,7 @@ class Collection implements \IteratorAggregate
     /**
      * Retrieve an external iterator.
      *
-     * @access public
+     * @access      public
      * @abstracting IteratorAggregate
      * @return Generator
      */

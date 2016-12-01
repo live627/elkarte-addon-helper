@@ -7,8 +7,8 @@ use live627\AddonHelper\MenuSection;
 use live627\AddonHelper\MenuArea;
 use live627\AddonHelper\MenuSubsection;
 
-require_once(__DIR__ . '/bootstrap.php');
-require_once(__DIR__ . '/OharaTest.php');
+require_once(__DIR__.'/bootstrap.php');
+require_once(__DIR__.'/OharaTest.php');
 
 class MenuTest extends \PHPUnit_Framework_TestCase
 {
@@ -18,52 +18,82 @@ class MenuTest extends \PHPUnit_Framework_TestCase
     {
         global $context, $user_info;
 
-        $this->menu = (new Menu(new MockOhara))->addSection('section1', MenuSection::buildFromArray(array(
-                'title' => 'One',
-                'permission' => array('admin_forum'),
-                'areas' => array(
-                    'area1' => MenuArea::buildFromArray(array(
-                        'label' => 'Area1 Label',
-                        'function' => function () {},
-                    )),
-                ),
-            )))->addSection('section2', MenuSection::buildFromArray(array(
-                'title' => 'Two',
-                'permission' => array('admin_forum'),
-                'areas' => array(
-                    'area2' => MenuArea::buildFromArray(array(
-                        'label' => 'Area2 Label',
-                        'function' => function () {},
-                        'custom_url' => 'custom_url',
-                        'hidden' => true,
-                    )),
-                    'area3' => MenuArea::buildFromArray(array(
-                        'permission' => 'area3 permission',
-                        'label' => 'Area3 Label',
-                        'function' => function () {},
-                        'subsections' => array(
-                            'sub1' => new MenuSubsection('Sub One', array('admin_forum')),
-                            'sub2' => new MenuSubsection('Sub Two', array('admin_forum'), true),
-                            'sub3' => new MenuSubsection('Sub Three', array('admin_forum'), false, false)),
-                    )),
-                    'area4' => MenuArea::buildFromArray(array(
-                        'label' => 'Area4 Label',
-                        'function' => function () {},
-                        'enabled' => false,
-                    )),
-                ),
-            )))->addSection('section3', MenuSection::buildFromArray(array(
-                'title' => 'Three',
-                'permission' => array('admin_forum'),
-                'enabled' => false,
-                'areas' => array(
-                    'area5' => MenuArea::buildFromArray(array(
-                        'label' => 'Area5 Label',
-                        'function' => function () {},
-                    )),
-                ),
+        $this->menu = (new Menu(new MockOhara))->addSection(
+            'section1',
+            MenuSection::buildFromArray(
+                array(
+                    'title' => 'One',
+                    'permission' => array('admin_forum'),
+                    'areas' => array(
+                        'area1' => MenuArea::buildFromArray(
+                            array(
+                                'label' => 'Area1 Label',
+                                'function' => function () {
+                                },
+                            )
+                        ),
+                    ),
+                )
             )
-        ));
+        )->addSection(
+            'section2',
+            MenuSection::buildFromArray(
+                array(
+                    'title' => 'Two',
+                    'permission' => array('admin_forum'),
+                    'areas' => array(
+                        'area2' => MenuArea::buildFromArray(
+                            array(
+                                'label' => 'Area2 Label',
+                                'function' => function () {
+                                },
+                                'custom_url' => 'custom_url',
+                                'hidden' => true,
+                            )
+                        ),
+                        'area3' => MenuArea::buildFromArray(
+                            array(
+                                'permission' => 'area3 permission',
+                                'label' => 'Area3 Label',
+                                'function' => function () {
+                                },
+                                'subsections' => array(
+                                    'sub1' => new MenuSubsection('Sub One', array('admin_forum')),
+                                    'sub2' => new MenuSubsection('Sub Two', array('admin_forum'), true),
+                                    'sub3' => new MenuSubsection('Sub Three', array('admin_forum'), false, false),
+                                ),
+                            )
+                        ),
+                        'area4' => MenuArea::buildFromArray(
+                            array(
+                                'label' => 'Area4 Label',
+                                'function' => function () {
+                                },
+                                'enabled' => false,
+                            )
+                        ),
+                    ),
+                )
+            )
+        )->addSection(
+            'section3',
+            MenuSection::buildFromArray(
+                array(
+                    'title' => 'Three',
+                    'permission' => array('admin_forum'),
+                    'enabled' => false,
+                    'areas' => array(
+                        'area5' => MenuArea::buildFromArray(
+                            array(
+                                'label' => 'Area5 Label',
+                                'function' => function () {
+                                },
+                            )
+                        ),
+                    ),
+                )
+            )
+        );
         $this->menu->addOption('extra_url_parameters', array('extra' => 'param'));
 
         $user_info['is_admin'] = true;
@@ -82,7 +112,7 @@ class MenuTest extends \PHPUnit_Framework_TestCase
         $this->menu->execute();
 
         // These are long-ass arrays, y'all!
-        $result = $context['menu_data_' . $context['max_menu_id']];
+        $result = $context['menu_data_'.$context['max_menu_id']];
 
         $this->assertArrayNotHasKey('section3', $result['sections']);
         $this->assertCount(2, $result['sections']);
@@ -100,7 +130,7 @@ class MenuTest extends \PHPUnit_Framework_TestCase
 
         $this->menu->execute();
 
-        $result = $context['menu_data_' . $context['max_menu_id']];
+        $result = $context['menu_data_'.$context['max_menu_id']];
         $this->assertStringStartsWith(';extra=param', $result['extra_parameters']);
     }
 

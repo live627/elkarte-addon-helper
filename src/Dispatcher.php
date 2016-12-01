@@ -1,11 +1,11 @@
 <?php
 
 /**
- * @package AddonHelper
- * @version 1.0
- * @author John Rayes <live627@gmail.com>
+ * @package   AddonHelper
+ * @version   1.0
+ * @author    John Rayes <live627@gmail.com>
  * @copyright Copyright (c) 2011-2016, John Rayes
- * @license http://opensource.org/licenses/MIT MIT
+ * @license   http://opensource.org/licenses/MIT MIT
  */
 
 namespace live627\AddonHelper;
@@ -38,19 +38,19 @@ class Dispatcher
     /**
      * Load up all the tabs.
      *
-     * @param Ohara $obj
+     * @param Ohara  $obj
      * @param string $sa
      */
     private function setTabData(Ohara $obj, $sa)
     {
         global $context;
 
-        $context['menu_data_' . $context['max_menu_id']]['tab_data'] = array(
+        $context['menu_data_'.$context['max_menu_id']]['tab_data'] = array(
             'title' => $obj->text('title'),
             'description' => $obj->text('desc'),
             $sa => array(
                 'description' => $obj->text($sa.'_desc'),
-            )
+            ),
         );
     }
 
@@ -58,7 +58,7 @@ class Dispatcher
      * Call a function based on the sub-action.
      * Also ensure that the action is allowed.
      *
-     * @param Ohara $obj
+     * @param Ohara  $obj
      * @param string $sa
      */
     private function callSubAction(Ohara $obj, $sa)
@@ -66,8 +66,9 @@ class Dispatcher
         $thisSubAction = $obj->subActions[$sa];
 
         // This area is reserved - do this here since the menu code does not.
-        if (!empty($thisSubAction[1]))
+        if (!empty($thisSubAction[1])) {
             $obj->isAllowedTo($thisSubAction[1]);
+        }
 
         $obj->{$thisSubAction[0]}();
     }
