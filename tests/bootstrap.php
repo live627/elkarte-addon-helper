@@ -46,7 +46,7 @@ class Errors
 // Get the autoloader rolling
 require(SOURCEDIR.'/Autoloader.class.php');
 $autoloder = Elk_Autoloader::getInstance();
-$autoloder->setupAutoloader(array(SOURCEDIR, SUBSDIR, CONTROLLERDIR, ADMINDIR, ADDONSDIR));
+$autoloder->setupAutoloader([SOURCEDIR, SUBSDIR, CONTROLLERDIR, ADMINDIR, ADDONSDIR]);
 $autoloder->register(SOURCEDIR, '\\ElkArte');
 
 $settings['theme_dir'] = $settings['default_theme_dir'] = BOARDDIR.'/themes/default';

@@ -18,7 +18,7 @@ class Collection implements \IteratorAggregate
      * @var array
      * @access private
      */
-    private $items = array();
+    private $items = [];
 
     /**
      * Appends a value to the object

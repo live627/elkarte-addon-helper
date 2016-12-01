@@ -36,31 +36,31 @@ class LinktreeTest extends \PHPUnit_Framework_TestCase
 
     public function testExistingLink()
     {
-        $expect = array(
+        $expect = [
             'name' => 'Foo',
             'url' => '/vendor/foo',
             'extra_before' => 'before foo',
             'extra_after' => 'after foo',
-        );
+        ];
         $this->assertContains($expect, $this->getLinktree());
 
-        $expect = array(
+        $expect = [
             'name' => 'BarDoom',
             'url' => '/vendor/foo.bardoom',
             'extra_before' => 'before bardoom',
             'extra_after' => 'after bardoom',
-        );
+        ];
         $this->assertContains($expect, $this->getLinktree());
     }
 
     public function testMissingLink()
     {
-        $expect = array(
+        $expect = [
             'name' => 'Baz Dib',
             'url' => '/vendor/baz.dib',
             'extra_before' => 'before baz',
             'extra_after' => 'after baz',
-        );
+        ];
         $this->assertNotContains($expect, $this->getLinktree());
     }
 

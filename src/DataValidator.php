@@ -31,11 +31,11 @@ class DataValidator extends \Data_Validator
         }
 
         if (!$this->processRegex($input[$field])) {
-            return array(
+            return [
                 'error_msg' => $php_errormsg,
                 'error' => 'validate_regex_syntax',
                 'field' => $field,
-            );
+            ];
         }
     }
 
@@ -52,7 +52,7 @@ class DataValidator extends \Data_Validator
         $e = error_reporting(0);
 
         // Catch any errors the regex may produce.
-        set_error_handler(array($this, 'handleError'));
+        set_error_handler([$this, 'handleError']);
 
         $r = preg_match($input, null) !== false;
         restore_error_handler();

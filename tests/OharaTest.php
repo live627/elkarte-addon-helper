@@ -8,7 +8,7 @@ require_once(__DIR__.'/bootstrap.php');
 
 $txt['months_title'] = 'Months';
 $txt['MockOharaedit_desc'] = 'edit description';
-$txt['MockOhara_months'] = array(
+$txt['MockOhara_months'] = [
     1 => 'January',
     'February',
     'March',
@@ -21,11 +21,11 @@ $txt['MockOhara_months'] = array(
     'October',
     'November',
     'December',
-);
+];
 
 $modSettings['months_title'] = 'Months';
 $modSettings['MockOhara'] = 1;
-$modSettings['MockOhara_months'] = array(
+$modSettings['MockOhara_months'] = [
     1 => 'January',
     'February',
     'March',
@@ -38,15 +38,15 @@ $modSettings['MockOhara_months'] = array(
     'October',
     'November',
     'December',
-);
+];
 
 $context['admin_menu_name'] = 'MockOhara';
 $context['MockOhara'] = ['tab_data' => []];
 
-$user_info = array(
+$user_info = [
     'is_admin' => true,
     'is_guest' => false,
-);
+];
 
 class MockOhara extends Ohara
 {
