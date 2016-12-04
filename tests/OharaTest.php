@@ -48,39 +48,6 @@ $user_info += [
     'is_guest' => false,
 ];
 
-class MockOhara extends Ohara
-{
-    public $name = 'MockOhara';
-
-    public $subActions = [
-        'index' => ['actionIndex'],
-        'edit' => ['actionEdit', 'g'],
-    ];
-
-    public function __construct()
-    {
-        parent::__construct(new \Simplex\Container);
-    }
-
-
-    public function actionEdit()
-    {
-        global $i;
-
-        $i = 'e';
-    }
-}
-
-class MockSukiOhara extends \Suki\Ohara
-{
-    public $name = 'MockOhara';
-
-    public function __construct()
-    {
-        $this->setRegistry();
-    }
-}
-
 class OharaTest extends \PHPUnit_Framework_TestCase
 {
     protected $loader;
@@ -88,8 +55,28 @@ class OharaTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $this->loader = new MockOhara;
-        $this->o = new MockSukiOhara;
+        if (is_callable([$this, 'createMock'])) {
+            $mock = $this->createMock('live627\AddonHelper\ServiceLayerInterface');
+        } else {
+            $mock = $this->getMock('live627\AddonHelper\ServiceLayerInterface');
+        }
+        $mock->method('checkAccess')
+             ->will($this->returnValueMap(['index',false,'edit',true]));
+
+        $this->loader = $this->getMockBuilder('live627\AddonHelper\Ohara')
+            ->setConstructorArgs(array(new \Simplex\Container))
+            ->setMethods(array('action_index', 'actionEdit', 'getServiceLayer'))
+            ->getMock();
+        $this->loader->name = 'MockOhara';
+        $this->loader->expects($this->never())
+            ->method('action_index');
+        $this->loader->method('getServiceLayer')
+             ->willReturn($mock);
+
+        $this->o = $this->getMockBuilder('Suki\Ohara')
+            ->setMethods(null)
+            ->getMock();
+        $this->o->name = 'MockOhara';
     }
 
     public function testName()
@@ -119,27 +106,31 @@ class OharaTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Interop\Container\ContainerInterface', $actual);
     }
 
+    /**
+     * @expectedException Elk_Exception
+     */
     public function testDispatched()
     {
-        global $context, $i;
+        global $context;
 
         $this->loader->getContainer()->get('dispatcher')->dispatch($this->loader);
-        $this->assertSame('i', $i);
         $this->assertSame('index', $context['sub_template']);
     }
 
     public function testDispatch()
     {
-        global $context, $i;
+        global $context;
+
+        $this->loader->expects($this->once())
+            ->method('actionEdit')
+            ->with();
 
         $context['max_menu_id'] = 'MockOhara';
-        $request = $this->loader->getContainer()->get('request');
+        $request = $this->loader->getContainer()->get('requestStack')->getCurrentRequest();
         $request->query->set('sa', 'edit');
         $request->query->set('area', 'mock');
         $this->loader->getContainer()->get('dispatcher')->dispatch($this->loader);
 
-        $this->assertTrue($this->loader->allowedTo('test'));
-        $this->assertSame('e', $i);
         $this->assertSame('mock_edit', $context['sub_template']);
         $this->assertSame('edit description', $context['menu_data_MockOhara']['tab_data']['edit']['description']);
     }

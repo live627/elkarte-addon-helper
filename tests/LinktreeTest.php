@@ -21,7 +21,11 @@ class LinktreeTest extends \PHPUnit_Framework_TestCase
 
         $context['linktree'] = [];
 
-        (new MockOhara)->getContainer()->get('linktree')->add(
+        $obj = $this->getMockBuilder('live627\AddonHelper\Ohara')
+            ->setConstructorArgs(array(new \Simplex\Container))
+            ->setMethods(['getServiceLayer'])
+            ->getMock();
+        $obj->getContainer()->get('linktree')->add(
             'Foo',
             '/vendor/foo',
             'before foo',

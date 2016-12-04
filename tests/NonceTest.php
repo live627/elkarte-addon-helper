@@ -22,10 +22,13 @@ class NonceTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $obj = new MockOhara;
-        $this->loader = new Nonce($obj);
+        $obj = $this->getMockBuilder('live627\AddonHelper\Ohara')
+            ->setConstructorArgs(array(new \Simplex\Container))
+            ->setMethods(['getServiceLayer'])
+            ->getMock();
         $this->requestStack = $obj->getContainer()->get('requestStack');
         $this->request = $this->requestStack->getCurrentRequest();
+        $this->loader = new Nonce($this->requestStack);
     }
 
     public function testKey()
@@ -61,7 +64,7 @@ class NonceTest extends \PHPUnit_Framework_TestCase
      */
     public function testTtlInConstructorNotInt()
     {
-        new Nonce(new MockOhara, null, true);
+        new Nonce($this->requestStack, null, true);
     }
 
     /**

@@ -64,7 +64,7 @@ class Dispatcher
     private function callSubAction(Ohara $obj, $sa)
     {
         // This area is reserved - do this here since the menu code does not.
-        if (!empty($thisSubAction[1])) {
+        if (false===$obj->getServiceLayer()->checkAccess($sa)) {
             throw new \Elk_Exception('no_access', false);
         }
 

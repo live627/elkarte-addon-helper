@@ -18,7 +18,11 @@ class MenuTest extends \PHPUnit_Framework_TestCase
     {
         global $context, $user_info;
 
-        $this->menu = (new Menu(new MockOhara))->addSection(
+        $obj = $this->getMockBuilder('live627\AddonHelper\Ohara')
+            ->setConstructorArgs(array(new \Simplex\Container))
+            ->setMethods(['getServiceLayer'])
+            ->getMock();
+        $this->menu = (new Menu($obj))->addSection(
             'section1',
             MenuSection::buildFromArray(
                 [
@@ -139,7 +143,11 @@ class MenuTest extends \PHPUnit_Framework_TestCase
      */
     public function testFail()
     {
-        (new Menu(new MockOhara))->execute();
+        $obj = $this->getMockBuilder('live627\AddonHelper\Ohara')
+            ->setConstructorArgs(array(new \Simplex\Container))
+            ->setMethods(['getServiceLayer'])
+            ->getMock();
+        (new Menu($obj))->execute();
     }
 
     public function testLinktree()
