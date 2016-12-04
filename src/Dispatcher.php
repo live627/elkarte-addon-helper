@@ -65,7 +65,7 @@ class Dispatcher
     {
         // This area is reserved - do this here since the menu code does not.
         if (!empty($thisSubAction[1])) {
-            $obj->isAllowedTo($thisSubAction[1]);
+            throw new \Elk_Exception('no_access', false);
         }
 
         $obj->{'action'.ucfirst($sa)}();

@@ -88,7 +88,7 @@ class Ohara extends \Action_Controller
      */
     public function actionIndex()
     {
-        \Errors::instance()->fatal_lang_error('no_access', false);
+        throw new \Elk_Exception('no_access', false);
     }
 
     /**
@@ -134,30 +134,6 @@ class Ohara extends \Action_Controller
     public function setContainer(ContainerInterface $container)
     {
         $this->container = $container;
-    }
-
-    /**
-     * @param string $permission
-     *
-     * @access public
-     * @return bool
-     */
-    public function allowedTo($permission)
-    {
-        return allowedTo($permission);
-    }
-
-    /**
-     * @param string $permission
-     *
-     * @access public
-     * @return bool
-     */
-    public function isAllowedTo($permission)
-    {
-        if (!$this->allowedTo($permission)) {
-            throw new \Elk_Exception('no_access', false);
-        }
     }
 
     /**
