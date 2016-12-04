@@ -12,6 +12,6 @@ class DataMapperTest extends \PHPUnit_Framework_TestCase
         $object = new \ReflectionClass($mock);
         $property = $object->getProperty('db');
         $property->setAccessible(true);
-        $this->assertSame('1a', $property->getValue($mock)->db->quote('{int:one}a', ['one' => 1]));
+        $this->assertSame('1a', $property->getValue($mock)->quote('{int:one}a', ['one' => 1]));
     }
 }
