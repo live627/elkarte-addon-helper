@@ -10,6 +10,8 @@
 
 namespace live627\AddonHelper;
 
+use Symfony\Component\HttpFoundation\RequestStack;
+
 class Nonce
 {
     /**
@@ -36,14 +38,14 @@ class Nonce
      * @param string $key The token key.
      * @param int    $ttl (Facultative) Makes the token expire after $this->ttl seconds. (null = never)
      */
-    public function __construct(Ohara $obj, $key = null, $ttl = 900)
+    public function __construct(RequestStack $requestStack, $key = null, $ttl = 900)
     {
         if (!is_int($ttl)) {
             throw new \InvalidArgumentException('Integer expected: $ttl');
         }
         $this->key = $key ?: 'csrf_'.bin2hex(random_bytes(8));
         $this->ttl = $ttl;
-        $this->request = $obj->getContainer()->get('request');
+        $this->request = $requestStack->getCurrentRequest();
     }
 
     /**

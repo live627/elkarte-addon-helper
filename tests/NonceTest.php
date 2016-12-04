@@ -11,6 +11,11 @@ class NonceTest extends \PHPUnit_Framework_TestCase
     protected $loader;
 
     /**
+     * @var Symfony\Component\HttpFoundation\RequestStack
+     */
+    private $requestStack;
+
+    /**
      * @var Symfony\Component\HttpFoundation\Request
      */
     private $request;
@@ -19,7 +24,8 @@ class NonceTest extends \PHPUnit_Framework_TestCase
     {
         $obj = new MockOhara;
         $this->loader = new Nonce($obj);
-        $this->request = $obj->getContainer()->get('request');
+        $this->requestStack = $obj->getContainer()->get('requestStack');
+        $this->request = $this->requestStack->getCurrentRequest();
     }
 
     public function testKey()

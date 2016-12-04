@@ -16,7 +16,7 @@ class Dispatcher
     {
         global $context;
 
-        $request = $obj->getContainer()->get('request');
+        $request = $obj->getContainer()->get('requestStack')->getCurrentRequest();
         $sa = $request->query->get('sa');
         $area = $request->query->get('area');
 

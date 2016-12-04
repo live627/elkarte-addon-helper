@@ -11,6 +11,7 @@
 namespace live627\AddonHelper;
 
 use Interop\Container\ServiceProvider as s;
+use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Request;
 
 class ServiceProvider implements s
@@ -27,8 +28,11 @@ class ServiceProvider implements s
             'datavalidator' => function () {
                 return new DataValidator;
             },
-            'request' => function () {
-                return Request::createFromGlobals();
+            'requestStack' => function () {
+                $requestStack = new RequestStack;
+                $requestStack->push(Request::createFromGlobals());
+
+                return $requestStack;
             },
         ];
     }
