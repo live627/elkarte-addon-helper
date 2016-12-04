@@ -53,16 +53,6 @@ class Ohara extends \Action_Controller
     public $boardUrl = '';
 
     /**
-     * Array of subactions.
-     *
-     * @access public
-     * @var array
-     */
-    public $subActions = [
-        'index' => ['actionIndex', 'admin_forum'],
-    ];
-
-    /**
      * holds instance of Simplex.
      *
      * @var ContainerInterface

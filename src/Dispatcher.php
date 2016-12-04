@@ -20,8 +20,8 @@ class Dispatcher
         $sa = $request->query->get('sa');
         $area = $request->query->get('area');
 
-        // Default to sub action 'index'
-        if (!isset($obj->subActions[$sa])) {
+        // Always fallback to sub action 'index'.
+        if (!is_callable([$obj, 'action'.ucfirst($sa)])) {
             $sa = 'index';
         }
 
@@ -63,14 +63,12 @@ class Dispatcher
      */
     private function callSubAction(Ohara $obj, $sa)
     {
-        $thisSubAction = $obj->subActions[$sa];
-
         // This area is reserved - do this here since the menu code does not.
         if (!empty($thisSubAction[1])) {
             $obj->isAllowedTo($thisSubAction[1]);
         }
 
-        $obj->{$thisSubAction[0]}();
+        $obj->{'action'.ucfirst($sa)}();
     }
 
     /**
