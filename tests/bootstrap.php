@@ -1,6 +1,7 @@
 <?php
 global $db_persist, $db_server, $db_user, $db_passwd, $db_port;
 global $db_type, $db_name, $ssi_db_user, $ssi_db_passwd, $db_prefix;
+global $user_info, $language, $txt;
 
 DEFINE('ELK', 'SSI');
 DEFINE('CACHE_STALE', '?R11');
@@ -44,7 +45,6 @@ class Errors
 }
 
 // Get the autoloader rolling
-require(SOURCEDIR.'/Autoloader.class.php');
 $autoloder = Elk_Autoloader::getInstance();
 $autoloder->setupAutoloader([SOURCEDIR, SUBSDIR, CONTROLLERDIR, ADMINDIR, ADDONSDIR]);
 $autoloder->register(SOURCEDIR, '\\ElkArte');
@@ -55,6 +55,8 @@ $settings['images_url'] = $settings['default_images_url'] = $boardurl.'/themes/d
 
 $txt = ['theme_language_error' => 'Unable to load the \'%1$s\' language file.'];
 $modSettings['enableErrorLogging'] = 0;
+$language = 'english';
+$user_info['language'] = 'english';
 $db_server = '127.0.0.1';
 file_put_contents(BOARDDIR.'/db_last_error.txt', time(), LOCK_EX);
 loadDatabase();

@@ -43,7 +43,7 @@ $modSettings['MockOhara_months'] = [
 $context['admin_menu_name'] = 'MockOhara';
 $context['MockOhara'] = ['tab_data' => []];
 
-$user_info = [
+$user_info += [
     'is_admin' => true,
     'is_guest' => false,
 ];
