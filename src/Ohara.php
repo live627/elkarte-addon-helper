@@ -19,7 +19,7 @@ namespace live627\AddonHelper;
 
 use Interop\Container\ContainerInterface;
 
-class Ohara extends \Action_Controller
+abstract class Ohara extends \Action_Controller implements ControllerInterface
 {
     /**
      * The main identifier for the class extending Ohara;
