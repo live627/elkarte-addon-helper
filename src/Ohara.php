@@ -81,10 +81,7 @@ abstract class Ohara extends \Action_Controller implements ControllerInterface
     }
 
     /**
-     * Default action according to {@link $subActions}.
-     *
-     * @usedby Dispatcher
-     * @return string
+     * {@inheritdoc}
      */
     public function actionIndex()
     {

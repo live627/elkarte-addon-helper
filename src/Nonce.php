@@ -30,13 +30,15 @@ class Nonce
     private $ttl = 900;
 
     /**
-     * @var Symfony\Component\HttpFoundation\Request
+     * @var \Symfony\Component\HttpFoundation\Request
      */
     private $request;
 
     /**
-     * @param string $key The token key.
-     * @param int    $ttl (Facultative) Makes the token expire after $this->ttl seconds. (null = never)
+     * @param RequestStack $requestStack Stack of requests. Only one request has been pushed onto it, and it is assumed
+     *                                   to contain all the hashes to check against.
+     * @param string       $key          The token key.
+     * @param int          $ttl          (Facultative) Makes the token expire after $this->ttl seconds. (null = never)
      */
     public function __construct(RequestStack $requestStack, $key = null, $ttl = 900)
     {

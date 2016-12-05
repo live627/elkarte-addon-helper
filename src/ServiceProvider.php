@@ -16,6 +16,9 @@ use Symfony\Component\HttpFoundation\Request;
 
 class ServiceProvider implements s
 {
+    /**
+     * @return array
+     */
     public function getServices()
     {
         return [

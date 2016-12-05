@@ -12,10 +12,19 @@ namespace live627\AddonHelper;
 
 interface ServiceLayerInterface
 {
+    /**
+     * @return EntityInterface
+     */
     public function getDataFromPost();
 
+    /**
+     * @return array
+     */
     public function validatePostData();
 
+    /**
+     * @return EntityInterface
+     */
     public function getEntityFromQueryString();
 
     /**

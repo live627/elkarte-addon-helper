@@ -10,12 +10,50 @@
 
 namespace live627\AddonHelper;
 
+/**
+ * Interface DataMapperInterface
+ * @package live627\AddonHelper
+ */
 interface DataMapperInterface
 {
+    /**
+     * @param $id int
+     *
+     * @return mixed[]
+     */
     public function fetchById($id);
+
+    /**
+     * @param int   $where
+     * @param array $where_vars
+     *
+     * @return mixed[]
+     */
     public function fetchBy($where, array $where_vars = []);
+
+    /**
+     * @param EntityInterface $entity
+     *
+     * @return int
+     */
     public function insert(EntityInterface $entity);
+
+    /**
+     * @param EntityInterface $entity
+     *
+     * @return mixed
+     */
     public function update(EntityInterface $entity);
+
+    /**
+     * @param EntityInterface $entity
+     *
+     * @return mixed
+     */
     public function save(EntityInterface $entity);
+
+    /**
+     * @param EntityInterface $entity
+     */
     public function delete(EntityInterface $entity);
 }
