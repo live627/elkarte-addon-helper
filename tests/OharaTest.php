@@ -63,8 +63,8 @@ class OharaTest extends \PHPUnit_Framework_TestCase
             ->will(
                 $this->returnValueMap(
                     [
-                        ['index', true,],
-                        ['edit', true,],
+                        ['index', true],
+                        ['edit', true],
                         ['edit1', false],
                     ]
                 )
