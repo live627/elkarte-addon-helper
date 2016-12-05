@@ -56,11 +56,9 @@ class OharaTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        if (is_callable([$this, 'createMock'])) {
-            $mock = $this->createMock('live627\AddonHelper\ServiceLayerInterface');
-        } else {
-            $mock = $this->getMock('live627\AddonHelper\ServiceLayerInterface');
-        }
+        $mock = is_callable([$this, 'createMock']) ? $this->createMock(
+            'live627\AddonHelper\ServiceLayerInterface'
+        ) : $this->getMock('live627\AddonHelper\ServiceLayerInterface');
         $mock->method('checkAccess')
             ->will(
                 $this->returnValueMap(
@@ -87,7 +85,7 @@ class OharaTest extends \PHPUnit_Framework_TestCase
         $this->loader->expects($this->never())
             ->method('action_index');
         $this->loader->method('getServiceLayer')
-             ->willReturn($mock);
+            ->willReturn($mock);
 
         $this->o = $this->getMockBuilder('Suki\Ohara')
             ->setMethods(null)
@@ -110,11 +108,9 @@ class OharaTest extends \PHPUnit_Framework_TestCase
         $actual = $this->loader->getContainer();
         $this->assertInstanceOf('Interop\Container\ContainerInterface', $actual);
 
-        if (is_callable([$this, 'createMock'])) {
-            $mock = $this->createMock('Interop\Container\ContainerInterface');
-        } else {
-            $mock = $this->getMock('Interop\Container\ContainerInterface');
-        }
+        $mock = is_callable([$this, 'createMock']) ? $this->createMock(
+            'Interop\Container\ContainerInterface'
+        ) : $this->getMock('Interop\Container\ContainerInterface');
         $this->loader->setContainer($mock);
         $this->assertContains('Mock_ContainerInterface', get_class($mock));
         $actual = $this->loader->getContainer();

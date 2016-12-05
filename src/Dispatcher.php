@@ -63,8 +63,8 @@ class Dispatcher
      */
     private function callSubAction(Ohara $obj, $sa)
     {
-        // This area is reserved - do this here since the menu code does not.
-        if (false===$obj->getServiceLayer()->checkAccess($sa)) {
+        // This area is reserved.
+        if (false === $obj->getServiceLayer()->checkAccess($sa)) {
             throw new \UnexpectedValueException('Accesss denied.');
         }
 

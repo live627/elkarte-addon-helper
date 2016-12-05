@@ -11,7 +11,7 @@ class DataValidatorTest extends \PHPUnit_Framework_TestCase
     public function setUp()
     {
         $obj = $this->getMockBuilder('live627\AddonHelper\Ohara')
-            ->setConstructorArgs(array(new \Simplex\Container))
+            ->setConstructorArgs([new \Simplex\Container])
             ->setMethods(['getServiceLayer'])
             ->getMock();
         $this->validator = $obj->getContainer()->get('datavalidator');
