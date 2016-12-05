@@ -23,7 +23,7 @@ class DataValidatorTest extends \PHPUnit_Framework_TestCase
     public function testIsValidRegex($value, $expected)
     {
         $this->validator->validation_rules(['value' => 'regex']);
-        $this->validate($value, $expected);
+        $this->validate('value', $value, $expected);
     }
 
     public function isValidRegexProvider()
@@ -42,8 +42,8 @@ class DataValidatorTest extends \PHPUnit_Framework_TestCase
          * Just pass anything to fool the validator into thinking
          * that the regex field magically vanished. Spooky.
          */
-        $this->validator->validation_rules([0]);
-        $this->validate($value, false);
+        $this->validator->validation_rules(['xxx' => 'regex']);
+        $this->validate('x', $value, false);
     }
 
 
@@ -53,7 +53,7 @@ class DataValidatorTest extends \PHPUnit_Framework_TestCase
     public function testSanitizeHtml($value, $expected, $clean)
     {
         $this->validator->sanitation_rules(['value' => 'htmlpurifier']);
-        $this->validate($value, $expected);
+        $this->validate('value', $value, $expected);
         $this->assertSame($this->validator->value, $clean);
     }
 
@@ -69,9 +69,9 @@ class DataValidatorTest extends \PHPUnit_Framework_TestCase
         ];
     }
 
-    public function validate($value, $expected)
+    public function validate($field, $value, $expected)
     {
-        $result = $this->validator->validate(['value' => $value]);
+        $result = $this->validator->validate([$field => $value]);
         $this->assertSame($expected, $result);
     }
 }
