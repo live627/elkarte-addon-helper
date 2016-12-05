@@ -65,7 +65,7 @@ class Dispatcher
     {
         // This area is reserved - do this here since the menu code does not.
         if (false===$obj->getServiceLayer()->checkAccess($sa)) {
-            throw new \Elk_Exception('no_access', false);
+            throw new \UnexpectedValueException('Accesss denied.');
         }
 
         $obj->{'action'.ucfirst($sa)}();

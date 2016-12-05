@@ -88,7 +88,7 @@ abstract class Ohara extends \Action_Controller implements ControllerInterface
      */
     public function actionIndex()
     {
-        throw new \Elk_Exception('no_access', false);
+        throw new \DomainException('Uhh... wut?');
     }
 
     /**

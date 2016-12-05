@@ -3,6 +3,7 @@
 namespace live627\AddonHelper\Tests;
 
 use live627\AddonHelper\Ohara;
+use DomainException;
 
 require_once(__DIR__.'/bootstrap.php');
 
@@ -61,11 +62,26 @@ class OharaTest extends \PHPUnit_Framework_TestCase
             $mock = $this->getMock('live627\AddonHelper\ServiceLayerInterface');
         }
         $mock->method('checkAccess')
-             ->will($this->returnValueMap(['index',false,'edit',true]));
+            ->will(
+                $this->returnValueMap(
+                    [
+                        ['index', true,],
+                        ['edit', true,],
+                        ['edit1', false],
+                    ]
+                )
+            );
 
         $this->loader = $this->getMockBuilder('live627\AddonHelper\Ohara')
             ->setConstructorArgs(array(new \Simplex\Container))
-            ->setMethods(array('action_index', 'actionEdit', 'getServiceLayer'))
+            ->setMethods(
+                [
+                    'action_index',
+                    'actionEdit',
+                    'actionEdit1',
+                    'getServiceLayer',
+                ]
+            )
             ->getMock();
         $this->loader->name = 'MockOhara';
         $this->loader->expects($this->never())
@@ -106,33 +122,52 @@ class OharaTest extends \PHPUnit_Framework_TestCase
         $this->assertInstanceOf('Interop\Container\ContainerInterface', $actual);
     }
 
-    /**
-     * @expectedException Elk_Exception
-     */
     public function testDispatched()
     {
         global $context;
 
+        $this->expectException(DomainException ::class);
         $this->loader->getContainer()->get('dispatcher')->dispatch($this->loader);
         $this->assertSame('index', $context['sub_template']);
     }
 
-    public function testDispatch()
+    /**
+     * @dataProvider dispatchCounter
+     */
+    public function testDispatch($num)
     {
         global $context;
 
-        $this->loader->expects($this->once())
-            ->method('actionEdit')
-            ->with();
-
-        $context['max_menu_id'] = 'MockOhara';
         $request = $this->loader->getContainer()->get('requestStack')->getCurrentRequest();
-        $request->query->set('sa', 'edit');
+
+        if ($num) {
+            $this->loader->expects($this->once())
+                ->method('actionEdit')
+                ->with();
+            $request->query->set('sa', 'edit');
+        } else {
+            $this->loader->expects($this->never())
+                ->method('actionEdit1')
+                ->with();
+            $request->query->set('sa', 'edit1');
+            $this->expectException(\UnexpectedValueException::class);
+        }
+        $context['max_menu_id'] = 'MockOhara';
         $request->query->set('area', 'mock');
         $this->loader->getContainer()->get('dispatcher')->dispatch($this->loader);
 
-        $this->assertSame('mock_edit', $context['sub_template']);
-        $this->assertSame('edit description', $context['menu_data_MockOhara']['tab_data']['edit']['description']);
+        if ($num) {
+            $this->assertSame('mock_edit', $context['sub_template']);
+            $this->assertSame('edit description', $context['menu_data_MockOhara']['tab_data']['edit']['description']);
+        }
+    }
+
+    public function dispatchCounter()
+    {
+        return [
+            [0],
+            [1],
+        ];
     }
 
     public function testText()
