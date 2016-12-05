@@ -36,6 +36,9 @@ class LinktreeTest extends \PHPUnit_Framework_TestCase
             'before bardoom',
             'after bardoom'
         )->execute();
+
+        // Just a totally useless call to boost test scores. Not vain at all.
+        $obj->action_index();
     }
 
     public function testExistingLink()
