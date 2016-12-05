@@ -73,7 +73,7 @@ class OharaTest extends \PHPUnit_Framework_TestCase
             );
 
         $this->loader = $this->getMockBuilder('live627\AddonHelper\Ohara')
-            ->setConstructorArgs(array(new \Simplex\Container))
+            ->setConstructorArgs([new \Simplex\Container])
             ->setMethods(
                 [
                     'action_index',

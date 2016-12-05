@@ -7,7 +7,7 @@ class DataMapperTest extends \PHPUnit_Framework_TestCase
     public function test()
     {
         $mock = $this->getMockBuilder('live627\AddonHelper\DataMapper')
-            ->setConstructorArgs(array(database()))
+            ->setConstructorArgs([database()])
             ->getMock();
         $object = new \ReflectionClass($mock);
         $property = $object->getProperty('db');

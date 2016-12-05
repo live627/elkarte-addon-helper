@@ -23,7 +23,7 @@ class NonceTest extends \PHPUnit_Framework_TestCase
     protected function setUp()
     {
         $obj = $this->getMockBuilder('live627\AddonHelper\Ohara')
-            ->setConstructorArgs(array(new \Simplex\Container))
+            ->setConstructorArgs([new \Simplex\Container])
             ->setMethods(['getServiceLayer'])
             ->getMock();
         $this->requestStack = $obj->getContainer()->get('requestStack');
