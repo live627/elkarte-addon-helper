@@ -213,7 +213,8 @@ abstract class Ohara extends \Action_Controller implements ControllerInterface
     {
         global $modSettings;
 
-        if (empty($var)) {
+        // This should be extended by somebody else...
+        if (empty($this->name) || empty($var)) {
             return false;
         }
 
@@ -232,11 +233,6 @@ abstract class Ohara extends \Action_Controller implements ControllerInterface
     public function setting($var)
     {
         global $modSettings;
-
-        // This should be extended by somebody else...
-        if (empty($this->name) || empty($var)) {
-            return false;
-        }
 
         if (true === $this->enable($var)) {
             return $modSettings[$this->name.'_'.$var];
@@ -257,15 +253,6 @@ abstract class Ohara extends \Action_Controller implements ControllerInterface
     public function modSetting($var)
     {
         global $modSettings;
-
-        // This should be extended by somebody else...
-        if (empty($this->name)) {
-            return false;
-        }
-
-        if (empty($var)) {
-            return false;
-        }
 
         if (isset($modSettings[$var])) {
             return $modSettings[$var];
