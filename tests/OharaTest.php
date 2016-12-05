@@ -209,11 +209,15 @@ class OharaTest extends \PHPUnit_Framework_TestCase
 
     public function testSettings()
     {
+        $actual = $this->loader->setting('');
+        $this->assertFalse($actual);
         $actual = $this->loader->setting('months_title');
         $this->assertFalse($actual);
         $actual = $this->loader->setting('months')[2];
         $this->assertSame('February', $actual);
 
+        $actual = $this->o->setting('');
+        $this->assertFalse($actual);
         $actual = $this->o->setting('months_title');
         $this->assertFalse($actual);
         $actual = $this->o->setting('months')[2];
