@@ -2,8 +2,8 @@
 
 namespace live627\AddonHelper\Tests;
 
-use live627\AddonHelper\Ohara;
 use DomainException;
+use UnexpectedValueException;
 
 require_once(__DIR__.'/bootstrap.php');
 
@@ -146,7 +146,7 @@ class OharaTest extends \PHPUnit_Framework_TestCase
                 ->method('actionEdit1')
                 ->with();
             $request->query->set('sa', 'edit1');
-            $this->expectException(\UnexpectedValueException::class);
+            $this->expectException(UnexpectedValueException::class);
         }
         $context['max_menu_id'] = 'MockOhara';
         $request->query->set('area', 'mock');

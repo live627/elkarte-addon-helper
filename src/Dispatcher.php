@@ -10,6 +10,8 @@
 
 namespace live627\AddonHelper;
 
+use UnexpectedValueException;
+
 class Dispatcher
 {
     public function dispatch(Ohara $obj)
@@ -65,7 +67,7 @@ class Dispatcher
     {
         // This area is reserved.
         if (false === $obj->getServiceLayer()->checkAccess($sa)) {
-            throw new \UnexpectedValueException('Accesss denied.');
+            throw new UnexpectedValueException('Accesss denied.');
         }
 
         $obj->{'action'.ucfirst($sa)}();

@@ -17,6 +17,7 @@
 
 namespace live627\AddonHelper;
 
+use DomainException;
 use Interop\Container\ContainerInterface;
 
 abstract class Ohara extends \Action_Controller implements ControllerInterface
@@ -85,7 +86,7 @@ abstract class Ohara extends \Action_Controller implements ControllerInterface
      */
     public function actionIndex()
     {
-        throw new \DomainException('Uhh... wut?');
+        throw new DomainException('Uhh... wut?');
     }
 
     /**
