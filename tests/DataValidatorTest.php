@@ -33,6 +33,19 @@ class DataValidatorTest extends \PHPUnit_Framework_TestCase
             ['/\d/', true],
         ];
     }
+    /**
+     * @dataProvider isValidRegexProvider
+     */
+    public function testInvalidField($value)
+    {
+        /*
+         * Just pass anything to fool the validator into thinking
+         * that the regex field magically vanished. Spooky.
+         */
+        $this->validator->validation_rules([0]);
+        $this->validate($value, false);
+    }
+
 
     /**
      * @dataProvider sanitizeHtmlProvider
