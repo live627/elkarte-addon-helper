@@ -26,7 +26,7 @@ class Menu
      */
     private $options, $sections;
     /**
-     * @var Ohara
+     * @var Controller
      */
     /**
      * @var array|bool
@@ -124,10 +124,10 @@ class Menu
     }
 
     /**
-     * @param Ohara     $obj
-     * @param bool|true $doLinktree
+     * @param Controller $obj
+     * @param bool       $doLinktree
      */
-    public function __construct(Ohara $obj, $doLinktree = true)
+    public function __construct(Controller $obj, $doLinktree = true)
     {
         $this->obj = $obj;
         $this->doLinktree = $doLinktree;

@@ -10,32 +10,47 @@
 
 namespace live627\AddonHelper;
 
-interface EntityInterface
+class NullEntity implements EntityInterface
 {
     /**
      * @return int
      */
-    public function getId();
+    public function getId()
+    {
+        return 0;
+    }
 
     /**
      * @param int $id
      */
-    public function setId($id);
+    public function setId($id)
+    {
+    }
 
     /**
      * @return string
      */
-    public function getName();
+    public function getName()
+    {
+        return '';
+    }
 
     /**
      * @return array
      */
-    public function getInsertData();
+    public function getInsertData()
+    {
+        return [];
+    }
 
     /**
      * @param string $permission
      *
-     * @return string
+     * @access public
+     * @return bool
      */
-    public function allowedTo($permission);
+    public function allowedTo($permission)
+    {
+        return true;
+    }
 }

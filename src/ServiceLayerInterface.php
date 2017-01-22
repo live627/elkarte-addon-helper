@@ -13,24 +13,43 @@ namespace live627\AddonHelper;
 interface ServiceLayerInterface
 {
     /**
-     * @return EntityInterface
+     * @return DataMapper
      */
-    public function getDataFromPost();
+    public function getDataMap();
 
     /**
+     * @param EntityInterface $object
+     *
+     * @return EntityInterface
+     */
+    public function makeNew(EntityInterface $object);
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
+     * @return EntityInterface
+     */
+    public function makeFromPost(\Symfony\Component\HttpFoundation\Request $request);
+
+    /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param DataValidator                             $validator
+     *
      * @return array
      */
-    public function validatePostData();
+    public function validatePostData(\Symfony\Component\HttpFoundation\Request $request, DataValidator $validator);
 
     /**
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     *
      * @return EntityInterface
      */
-    public function getEntityFromQueryString();
+    public function makeFromRequest(\Symfony\Component\HttpFoundation\Request $request);
 
     /**
-     * @param string $sa
+     * @param \Symfony\Component\HttpFoundation\Request $request
      *
      * @return bool
      */
-    public function checkAccess($sa);
+    public function checkAccess(\Symfony\Component\HttpFoundation\Request $request);
 }

@@ -14,7 +14,7 @@ use UnexpectedValueException;
 
 class Dispatcher
 {
-    public function dispatch(Ohara $obj)
+    public function dispatch(Controller $obj)
     {
         global $context;
 
@@ -34,16 +34,16 @@ class Dispatcher
         // Preemptively set a page title.
         $context['page_title'] = $obj->text('title');
 
-        $this->callSubAction($obj, $sa);
+        $this->callSubAction($obj, $sa, $request);
     }
 
     /**
      * Load up all the tabs.
      *
-     * @param Ohara  $obj
-     * @param string $sa
+     * @param Controller $obj
+     * @param string     $sa
      */
-    private function setTabData(Ohara $obj, $sa)
+    private function setTabData(Controller $obj, $sa)
     {
         global $context;
 
@@ -60,13 +60,13 @@ class Dispatcher
      * Call a function based on the sub-action.
      * Also ensure that the action is allowed.
      *
-     * @param Ohara  $obj
-     * @param string $sa
+     * @param Controller $obj
+     * @param string     $sa
      */
-    private function callSubAction(Ohara $obj, $sa)
+    private function callSubAction(Controller $obj, $sa, $request)
     {
         // This area is reserved.
-        if (false === $obj->getServiceLayer()->checkAccess($sa)) {
+        if (false === $obj->getServiceLayer()->checkAccess($request)) {
             throw new UnexpectedValueException('Accesss denied.');
         }
 

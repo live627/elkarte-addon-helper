@@ -19,7 +19,7 @@ interface DataMapperInterface
     /**
      * @param $id int
      *
-     * @return mixed[]
+     * @return EntityInterface
      */
     public function fetchById($id);
 
@@ -27,9 +27,9 @@ interface DataMapperInterface
      * @param int   $where
      * @param array $where_vars
      *
-     * @return mixed[]
+     * @return EntityInterface[]
      */
-    public function fetchBy($where, array $where_vars = []);
+    public function fetchBy($where = '', array $where_vars = []);
 
     /**
      * @param EntityInterface $entity
