@@ -10,11 +10,35 @@
 
 namespace live627\AddonHelper;
 
+use DomainException;
+
+/**
+ * Class Menu
+ * @package live627\AddonHelper
+ */
 class Menu
 {
+    /**
+     * @var Collection
+     */
+    /**
+     * @var Collection
+     */
     private $options, $sections;
+    /**
+     * @var Ohara
+     */
+    /**
+     * @var array|bool
+     */
+    /**
+     * @var bool
+     */
     private $obj, $incData = [], $doLinktree = true;
 
+    /**
+     *
+     */
     public function createMenu()
     {
         $options = [];
@@ -31,13 +55,16 @@ class Menu
         $this->incData = createMenu($sections, $options);
     }
 
+    /**
+     * @throws DomainException
+     */
     public function execute()
     {
         $this->createMenu();
 
         // Nothing valid?
         if ($this->incData == false) {
-            throw new \Elk_Exception('no_access', false);
+            throw new DomainException('Cannot build menu: invalid array.');
         }
         if ($this->doLinktree) {
             $this->buildLinktree();
@@ -46,6 +73,9 @@ class Menu
         callMenu($this->incData);
     }
 
+    /**
+     *
+     */
     private function buildLinktree()
     {
         global $context;
@@ -69,6 +99,12 @@ class Menu
         $linktree->execute();
     }
 
+    /**
+     * @param             $id
+     * @param MenuSection $section
+     *
+     * @return $this
+     */
     public function addSection($id, MenuSection $section)
     {
         $this->sections->add([$id, get_object_vars($section)]);
@@ -87,6 +123,10 @@ class Menu
         $this->options->add([$id, $val]);
     }
 
+    /**
+     * @param Ohara     $obj
+     * @param bool|true $doLinktree
+     */
     public function __construct(Ohara $obj, $doLinktree = true)
     {
         $this->obj = $obj;

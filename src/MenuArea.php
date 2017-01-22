@@ -16,7 +16,7 @@ class MenuArea
      * @var string[] $permission  Array of permissions to determine who can access this area.
      * @var string   $label       Optional text string for link (Otherwise $txt[$index] will be used)
      * @var string   $file        Name of source file required for this area.
-     * @var string   $function    Function to call when area is selected.
+     * @var callable $function    Function to call when area is selected.
      * @var string   $custom_url  URL to use for this menu item.
      * @var string   $icon        File name of an icon to use on the menu, if using the sprite class, set as
      *      transparent.png
@@ -27,13 +27,20 @@ class MenuArea
      */
     public $permission = [], $label = '', $file = '', $function, $url = '', $icon = '', $class = '', $enabled = true, $hidden = false, $subsections = [];
 
+    /**
+     * @param array $arr
+     *
+     * @return MenuArea
+     */
     public static function buildFromArray(array $arr)
     {
         $area = new self;
-        foreach ($arr as $var => $val) {
-            if (property_exists($area, $var)) {
-                $area->{$var} = $val;
-            }
+        $vars = get_object_vars($area);
+        foreach (array_replace(
+                     $vars,
+                     array_intersect_key($arr, $vars)
+                 ) as $var => $val) {
+            $area->{$var} = $val;
         }
         if (isset($arr['subsections'])) {
             foreach ($arr['subsections'] as $var => $subsection) {
@@ -44,6 +51,12 @@ class MenuArea
         return $area;
     }
 
+    /**
+     * @param string         $id
+     * @param MenuSubsection $subsection
+     *
+     * @return $this
+     */
     public function addSubsection($id, MenuSubsection $subsection)
     {
         $subsection = get_object_vars($subsection);

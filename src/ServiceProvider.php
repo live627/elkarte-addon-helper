@@ -11,8 +11,8 @@
 namespace live627\AddonHelper;
 
 use Interop\Container\ServiceProvider as s;
-use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RequestStack;
 
 class ServiceProvider implements s
 {

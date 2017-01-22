@@ -20,13 +20,20 @@ class MenuSection
      */
     public $title = '', $enabled = true, $permissions = [], $areas = [];
 
+    /**
+     * @param array $arr
+     *
+     * @return MenuSection
+     */
     public static function buildFromArray(array $arr)
     {
         $section = new self;
-        foreach ($arr as $var => $val) {
-            if (property_exists($section, $var)) {
-                $section->{$var} = $val;
-            }
+        $vars = get_object_vars($section);
+        foreach (array_replace(
+                     $vars,
+                     array_intersect_key($arr, $vars)
+                 ) as $var => $val) {
+            $section->{$var} = $val;
         }
         if (isset($arr['areas'])) {
             foreach ($arr['areas'] as $var => $area) {
@@ -37,6 +44,12 @@ class MenuSection
         return $section;
     }
 
+    /**
+     * @param string   $id
+     * @param MenuArea $area
+     *
+     * @return $this
+     */
     public function addArea($id, MenuArea $area)
     {
         $this->areas[$id] = get_object_vars($area);

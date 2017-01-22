@@ -56,9 +56,7 @@ class OharaTest extends \PHPUnit_Framework_TestCase
 
     protected function setUp()
     {
-        $mock = is_callable([$this, 'createMock']) ? $this->createMock(
-            'live627\AddonHelper\ServiceLayerInterface'
-        ) : $this->getMock('live627\AddonHelper\ServiceLayerInterface');
+        $mock = $this->createMock('live627\AddonHelper\ServiceLayerInterface');
         $mock->method('checkAccess')
             ->will(
                 $this->returnValueMap(
@@ -108,9 +106,7 @@ class OharaTest extends \PHPUnit_Framework_TestCase
         $actual = $this->loader->getContainer();
         $this->assertInstanceOf('Interop\Container\ContainerInterface', $actual);
 
-        $mock = is_callable([$this, 'createMock']) ? $this->createMock(
-            'Interop\Container\ContainerInterface'
-        ) : $this->getMock('Interop\Container\ContainerInterface');
+        $mock = $this->createMock('Interop\Container\ContainerInterface');
         $this->loader->setContainer($mock);
         $this->assertContains('Mock_ContainerInterface', get_class($mock));
         $actual = $this->loader->getContainer();
@@ -122,7 +118,7 @@ class OharaTest extends \PHPUnit_Framework_TestCase
     {
         global $context;
 
-        $this->expectException(DomainException ::class);
+        $this->expectException(DomainException::class);
         $this->loader->getContainer()->get('dispatcher')->dispatch($this->loader);
         $this->assertSame('index', $context['sub_template']);
     }

@@ -66,6 +66,11 @@ abstract class Ohara extends \Action_Controller implements ControllerInterface
     protected $nonce;
 
     /**
+     * @var \Symfony\Component\HttpFoundation\Request
+     */
+    private $request;
+
+    /**
      * Sets many properties replacing SMF's global vars.
      *
      * @access public
@@ -78,6 +83,7 @@ abstract class Ohara extends \Action_Controller implements ControllerInterface
         $this->boardUrl = $boardurl;
         $this->container = $container;
         $this->container->register(new ServiceProvider);
+        $this->request = $this->getContainer()->get('requestStack')->getCurrentRequest();
         $this->nonce = new Nonce($this->getContainer()->get('requestStack'), md5(static::class));
     }
 
