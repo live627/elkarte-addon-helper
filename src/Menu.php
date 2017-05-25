@@ -90,7 +90,7 @@ class Menu
                 $this->obj->scriptUrl.'?action='.$context['current_action'].';area='.$this->incData['current_area']
             );
         }
-        if (current(array_keys($this->incData['subsections'])) != $this->incData['current_subsection']) {
+        if (array_shift(array_keys($this->incData['subsections'])) !== $this->incData['current_subsection']) {
             $linktree->add(
                 $this->incData['subsections'][$this->incData['current_subsection']][0],
                 $this->obj->scriptUrl.'?action='.$context['current_action'].';area='.$this->incData['current_area'].';sa='.$this->incData['current_subsection']
